@@ -1,3 +1,5 @@
+// Demo hosting (Netlify Forms) posts to "/". Set PUBLIC_FORM_ENDPOINT at build time to use another backend.
+const ENDPOINT = import.meta.env.PUBLIC_FORM_ENDPOINT || '/';
 const MAX_PHOTOS = 3;
 const MAX_SIDE = 1600;
 
@@ -57,7 +59,7 @@ form.addEventListener('submit', async (event) => {
   }
 
   try {
-    const res = await fetch('/', { method: 'POST', body: data });
+    const res = await fetch(ENDPOINT, { method: 'POST', body: data });
     if (!res.ok) throw new Error(String(res.status));
     form.innerHTML =
       '<h3>Mensaje enviado</h3>' +

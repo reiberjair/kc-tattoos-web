@@ -13,6 +13,10 @@ The contact form sends the visitor's details and up to 3 photos to Karla by emai
   and stored in the Netlify dashboard. Enable it in Netlify: Site > Forms > Notifications > add Karla's email.
 - `src/scripts/form.js` shrinks phone photos to 1600 px JPEG (Netlify limit is ~8 MB per submission)
   and posts the form with `fetch`. `src/pages/gracias.astro` is the no-JS fallback.
+- Netlify is for the client demo only, not permanent hosting. The form backend is swappable:
+  set `PUBLIC_FORM_ENDPOINT` at build time to point `form.js` at another endpoint that accepts the
+  same multipart fields (`nombre`, `contacto`, `zona`, `tamano`, `idea`, `foto1..3`). Planned permanent
+  option: Cloudflare Pages + a Pages Function that emails Karla through Resend (not built yet).
 - Forms do not work in `astro dev` / `astro preview`; they only work once deployed on Netlify.
 
 ## Files
