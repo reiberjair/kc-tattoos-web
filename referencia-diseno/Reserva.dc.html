@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Flujo de reserva</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Manrope:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div id="reserva" style="background: {{bg}}; color: {{text}}; font-family: {{bodyFont}}; border-top: 1px solid {{line}}">
+<div style="max-width: 1320px; margin: 0 auto; padding: 88px 32px; display: flex; flex-direction: column; gap: 40px">
+
+<div style="display: flex; flex-direction: column; gap: 14px; max-width: 680px">
+<span style="font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: {{accent}}">Reserva en 4 pasos</span>
+<h2 style="margin: 0; font-family: {{displayFont}}; font-weight: 400; font-size: clamp(44px, 5vw, 68px); line-height: 1">Del boceto a tu cita</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.7; color: {{muted}}">Envía una foto de tu idea y de la zona del cuerpo. {{artista}} la revisa, te propone un plan de sesiones con precio cerrado y tú eliges las fechas.</p>
+</div>
+
+<ol style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px">
+<sc-for list="{{pasos}}" as="p" hint-placeholder-count="4">
+<li>
+<button type="button" onClick="{{p.go}}" style="width: 100%; min-height: 68px; display: flex; align-items: center; gap: 14px; padding: 12px 16px; background: {{p.bg}}; border: 1px solid {{p.border}}; color: {{text}}; cursor: pointer; text-align: left; font-family: {{bodyFont}}">
+<span style="width: 34px; height: 34px; flex: 0 0 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: {{p.dotBg}}; border: 1px solid {{p.dotBorder}}; color: {{p.dotFg}}; font-size: 14px; font-weight: 700">{{p.n}}</span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 700">{{p.t}}</span><span style="font-size: 12px; color: {{muted}}">{{p.d}}</span></span>
+</button>
+</li>
+</sc-for>
+</ol>
+
+<sc-if value="{{s1}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-wrap: wrap; gap: 40px">
+<div style="flex: 1 1 420px; display: flex; flex-direction: column; gap: 16px">
+<span style="font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: {{muted}}">Fotos para la evaluación</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+<label style="position: relative; display: flex; flex-direction: column; gap: 8px; cursor: pointer">
+<input type="file" accept="image/*" onChange="{{onRef}}" style="position: absolute; top: 0; left: 0; width: 1px; height: 1px; opacity: 0">
+<div style="height: 300px; border: 1px dashed {{accent}}; background: {{surface}}; display: flex; align-items: center; justify-content: center; overflow: hidden">
+<sc-if value="{{hasRef}}" hint-placeholder-val="{{ true }}"><img src="{{refUrl}}" alt="Referencia enviada" style="width: 100%; height: 100%; object-fit: cover"></sc-if>
+<sc-if value="{{noRef}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 16px; text-align: center">
+<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="M21 16l-5-5-8 8"></path></svg>
+<span style="font-size: 14px">Toca para subir</span>
+</div>
+</sc-if>
+</div>
+<span style="font-size: 15px; font-weight: 700">Tu idea o referencia</span>
+<span style="font-size: 13px; color: {{muted}}">{{refName}}</span>
+</label>
+<label style="position: relative; display: flex; flex-direction: column; gap: 8px; cursor: pointer">
+<input type="file" accept="image/*" onChange="{{onZona}}" style="position: absolute; top: 0; left: 0; width: 1px; height: 1px; opacity: 0">
+<div style="height: 300px; border: 1px dashed {{line}}; background: {{surface}}; display: flex; align-items: center; justify-content: center; overflow: hidden">
+<sc-if value="{{hasZona}}" hint-placeholder-val="{{ false }}"><img src="{{zonaUrl}}" alt="Foto de la zona" style="width: 100%; height: 100%; object-fit: cover"></sc-if>
+<sc-if value="{{noZona}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 16px; text-align: center">
+<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4"></path><path d="M7 9l5-5 5 5"></path><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"></path></svg>
+<span style="font-size: 14px">Toca para subir</span>
+</div>
+</sc-if>
+</div>
+<span style="font-size: 15px; font-weight: 700">Foto de la zona del cuerpo</span>
+<span style="font-size: 13px; color: {{muted}}">{{zonaName}}</span>
+</label>
+</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.6; color: {{muted}}">Una foto de la zona con buena luz ayuda al artista a calcular el tamaño real y a revisar la piel o tatuajes anteriores.</p>
+</div>
+
+<div style="flex: 1 1 460px; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: {{muted}}">Zona del cuerpo</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{zonas}}" as="z" hint-placeholder-count="6">
+<button type="button" onClick="{{z.pick}}" style="min-height: 44px; padding: 0 16px; background: {{z.bg}}; border: 1px solid {{z.border}}; color: {{z.fg}}; font-family: {{bodyFont}}; font-size: 14px; cursor: pointer">{{z.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: {{muted}}">Tamaño aproximado</span>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px">
+<sc-for list="{{tamanos}}" as="t" hint-placeholder-count="5">
+<button type="button" onClick="{{t.pick}}" style="min-height: 60px; padding: 8px 12px; background: {{t.bg}}; border: 1px solid {{t.border}}; color: {{t.fg}}; font-family: {{bodyFont}}; cursor: pointer; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; text-align: left">
+<span style="font-size: 14px; font-weight: 700">{{t.label}}</span><span style="font-size: 12px">{{t.d}}</span>
+</button>
+</sc-for>
+</div>
+</div>
+<label style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: {{muted}}">Estilo
+<select value="{{estilo}}" onChange="{{setEstilo}}" style="height: 48px; background: {{bg}}; border: none; border-bottom: 1px solid {{line}}; color: {{text}}; font-family: {{bodyFont}}; font-size: 17px"><option>Botánica</option><option>Micro-realismo</option><option>Lettering fino</option><option>Geométrico</option><option>No estoy seguro</option></select>
+</label>
+<label style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: {{muted}}">Cuéntame la idea
+<textarea rows="3" placeholder="Qué significa, qué te gustaría cambiar de la referencia…" style="background: transparent; border: none; border-bottom: 1px solid {{line}}; color: {{text}}; font-family: {{bodyFont}}; font-size: 17px; padding-top: 8px"></textarea>
+</label>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px">
+<label style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: {{muted}}">Nombre<input type="text" style="height: 46px; background: transparent; border: none; border-bottom: 1px solid {{line}}; color: {{text}}; font-family: {{bodyFont}}; font-size: 17px"></label>
+<label style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: {{muted}}">Email o WhatsApp<input type="text" style="height: 46px; background: transparent; border: none; border-bottom: 1px solid {{line}}; color: {{text}}; font-family: {{bodyFont}}; font-size: 17px"></label>
+</div>
+<button type="button" onClick="{{toPlan}}" style="align-self: flex-start; min-height: 56px; padding: 0 32px; background: {{accent}}; color: {{onAccent}}; border: none; font-family: {{bodyFont}}; font-weight: 700; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer">Enviar para evaluación →</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{s2}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-wrap: wrap; gap: 40px">
+<div style="flex: 1 1 360px; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; align-items: center; gap: 10px; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: {{accent}}"><span style="width: 8px; height: 8px; border-radius: 50%; background: {{accent}}"></span>Evaluación lista · respuesta en [48 h]</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<div style="height: 220px; background: {{surface}}; border: 1px solid {{line}}; overflow: hidden; display: flex; align-items: center; justify-content: center">
+<sc-if value="{{hasRef}}" hint-placeholder-val="{{ true }}"><img src="{{refUrl}}" alt="Tu referencia" style="width: 100%; height: 100%; object-fit: cover"></sc-if>
+<sc-if value="{{noRef}}" hint-placeholder-val="{{ false }}"><span style="font-size: 13px; color: {{muted}}">Sin referencia</span></sc-if>
+</div>
+<div style="height: 220px; background: {{surface}}; border: 1px solid {{line}}; overflow: hidden; display: flex; align-items: center; justify-content: center">
+<sc-if value="{{hasZona}}" hint-placeholder-val="{{ false }}"><img src="{{zonaUrl}}" alt="Tu zona" style="width: 100%; height: 100%; object-fit: cover"></sc-if>
+<sc-if value="{{noZona}}" hint-placeholder-val="{{ true }}"><span style="font-size: 13px; color: {{muted}}; padding: 12px; text-align: center">Foto de la zona pendiente</span></sc-if>
+</div>
+</div>
+<div style="background: {{surface}}; border: 1px solid {{line}}; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+<span style="font-family: {{displayFont}}; font-style: italic; font-size: 26px">Nota de {{artista}}</span>
+<p style="margin: 0; font-size: 16px; line-height: 1.7; color: {{muted}}">{{nota}}</p>
+<span style="font-size: 14px">— {{artista}}</span>
+</div>
+</div>
+
+<div style="flex: 1 1 520px; display: flex; flex-direction: column; gap: 20px">
+<h3 style="margin: 0; font-family: {{displayFont}}; font-weight: 400; font-size: 42px">Tu plan propuesto</h3>
+<sc-for list="{{opciones}}" as="o" hint-placeholder-count="2">
+<button type="button" onClick="{{o.pick}}" style="text-align: left; padding: 22px 24px; background: {{o.bg}}; border: 1px solid {{o.border}}; color: {{text}}; cursor: pointer; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; align-items: center; font-family: {{bodyFont}}">
+<span style="display: flex; flex-direction: column; gap: 6px; flex: 1 1 260px">
+<span style="font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: {{accent}}">{{o.badge}}</span>
+<span style="font-family: {{displayFont}}; font-size: 30px">{{o.t}}</span>
+<span style="font-size: 14px; color: {{muted}}">{{o.sub}}</span>
+</span>
+<span style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px">
+<span style="font-size: 14px; color: {{muted}}; text-decoration: line-through">{{o.antes}}</span>
+<span style="font-family: {{displayFont}}; font-size: 38px">{{o.totalTxt}}</span>
+<span style="font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: {{muted}}">{{o.marca}}</span>
+</span>
+</button>
+</sc-for>
+<div style="display: flex; flex-direction: column; border-top: 1px solid {{line}}">
+<sc-for list="{{sesiones}}" as="se" hint-placeholder-count="2">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 16px 0; border-bottom: 1px solid {{line}}">
+<span style="width: 30px; height: 30px; border-radius: 50%; border: 1px solid {{accent}}; color: {{accent}}; display: flex; align-items: center; justify-content: center; font-size: 13px">{{se.n}}</span>
+<span style="flex: 1 1 200px; font-size: 16px">{{se.t}}</span>
+<span style="font-size: 14px; color: {{muted}}">{{se.h}}</span>
+<span style="font-size: 16px; font-weight: 700; min-width: 80px; text-align: right">{{se.p}}</span>
+</div>
+</sc-for>
+</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.6; color: {{muted}}">Entre sesiones se dejan unas 3–4 semanas para que la piel cicatrice. Depósito para reservar: {{depTxt}}, se descuenta del total.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center">
+<button type="button" onClick="{{toIdea}}" style="min-height: 52px; padding: 0 22px; background: transparent; border: 1px solid {{line}}; color: {{text}}; font-family: {{bodyFont}}; font-size: 14px; cursor: pointer">← Cambiar detalles</button>
+<button type="button" onClick="{{toFechas}}" style="min-height: 56px; padding: 0 32px; background: {{accent}}; color: {{onAccent}}; border: none; font-family: {{bodyFont}}; font-weight: 700; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer">Aceptar plan y elegir fechas →</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{s3}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-wrap: wrap; gap: 48px">
+<div style="flex: 1 1 460px; display: flex; flex-direction: column; gap: 20px">
+<span style="font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: {{muted}}">Día de tu primera sesión</span>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 10px">
+<sc-for list="{{fechas}}" as="f" hint-placeholder-count="8">
+<button type="button" onClick="{{f.pick}}" style="min-height: 96px; background: {{f.bg}}; border: 1px solid {{f.border}}; color: {{f.fg}}; font-family: {{bodyFont}}; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px">
+<span style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px">{{f.dia}}</span>
+<span style="font-family: {{displayFont}}; font-size: 34px; line-height: 1">{{f.num}}</span>
+<span style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px">{{f.mes}}</span>
+</button>
+</sc-for>
+</div>
+<span style="font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: {{muted}}">Hora</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{horas}}" as="h" hint-placeholder-count="3">
+<button type="button" onClick="{{h.pick}}" style="min-height: 48px; padding: 0 22px; background: {{h.bg}}; border: 1px solid {{h.border}}; color: {{h.fg}}; font-family: {{bodyFont}}; font-size: 15px; cursor: pointer">{{h.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="flex: 1 1 420px; display: flex; flex-direction: column; gap: 16px">
+<h3 style="margin: 0; font-family: {{displayFont}}; font-weight: 400; font-size: 40px">Calendario de sesiones</h3>
+<div style="display: flex; flex-direction: column; border-top: 1px solid {{line}}">
+<sc-for list="{{sesiones}}" as="se" hint-placeholder-count="2">
+<div style="display: flex; flex-wrap: wrap; gap: 6px 20px; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid {{line}}">
+<span style="font-size: 16px">Sesión {{se.n}} · {{se.t}}</span>
+<span style="font-size: 15px; color: {{accent}}">{{se.fecha}}</span>
+</div>
+</sc-for>
+</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.6; color: {{muted}}">Las siguientes sesiones se proponen con 4 semanas de separación. Puedes moverlas sin costo hasta [X] días antes.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<button type="button" onClick="{{toPlan}}" style="min-height: 52px; padding: 0 22px; background: transparent; border: 1px solid {{line}}; color: {{text}}; font-family: {{bodyFont}}; font-size: 14px; cursor: pointer">← Volver al plan</button>
+<button type="button" onClick="{{toConfirm}}" style="min-height: 56px; padding: 0 32px; background: {{accent}}; color: {{onAccent}}; border: none; font-family: {{bodyFont}}; font-weight: 700; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer">Pagar depósito {{depTxt}} y confirmar</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{s4}}" hint-placeholder-val="{{ false }}">
+<div style="width: 100%; max-width: 780px; margin: 0 auto; border: 1px solid {{accent}}; background: {{surface}}">
+<div style="padding: 32px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; border-bottom: 1px dashed {{line}}">
+<span style="width: 56px; height: 56px; border-radius: 50%; background: {{accent}}; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="{{onAccent}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 6px; flex: 1 1 300px">
+<span style="font-family: {{displayFont}}; font-size: 38px; line-height: 1">Tu cita está reservada</span>
+<span style="font-size: 15px; color: {{muted}}">Confirmación enviada a tu email y WhatsApp · Nº [CÓDIGO]</span>
+</div>
+</div>
+<div style="padding: 8px 32px">
+<sc-for list="{{resumen}}" as="r" hint-placeholder-count="7">
+<div style="display: flex; flex-wrap: wrap; gap: 6px 20px; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid {{line}}">
+<span style="font-size: 14px; color: {{muted}}">{{r.k}}</span>
+<span style="font-size: 16px; text-align: right">{{r.v}}</span>
+</div>
+</sc-for>
+</div>
+<div style="padding: 20px 32px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: {{accent}}">Tus sesiones</span>
+<sc-for list="{{sesiones}}" as="se" hint-placeholder-count="2">
+<div style="display: flex; flex-wrap: wrap; gap: 6px 20px; justify-content: space-between; font-size: 15px">
+<span>Sesión {{se.n}} · {{se.t}}</span><span style="color: {{muted}}">{{se.fecha}} · {{se.p}}</span>
+</div>
+</sc-for>
+</div>
+<div style="padding: 24px 32px 32px; display: flex; flex-wrap: wrap; gap: 12px">
+<button type="button" style="min-height: 52px; padding: 0 24px; background: {{accent}}; color: {{onAccent}}; border: none; font-family: {{bodyFont}}; font-weight: 700; font-size: 14px; cursor: pointer">Añadir al calendario</button>
+<button type="button" style="min-height: 52px; padding: 0 24px; background: transparent; border: 1px solid {{line}}; color: {{text}}; font-family: {{bodyFont}}; font-size: 14px; cursor: pointer">Guía de cuidado</button>
+<button type="button" onClick="{{toFechas}}" style="min-height: 52px; padding: 0 24px; background: transparent; border: 1px solid {{line}}; color: {{text}}; font-family: {{bodyFont}}; font-size: 14px; cursor: pointer">Cambiar fechas</button>
+</div>
+</div>
+</sc-if>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"precioSesion":{"editor":"int","default":250,"min":50,"max":3000,"step":10,"unit":"$","section":"Precios"},"descuento":{"editor":"int","default":10,"min":0,"max":40,"unit":"%","section":"Precios"},"deposito":{"editor":"int","default":100,"min":0,"max":1000,"step":10,"unit":"$","section":"Precios"},"artista":{"editor":"text","default":"[Nombre del artista]"},"accent":{"editor":"color","default":"#C9A46A"},"bg":{"editor":null},"surface":{"editor":null},"text":{"editor":null},"muted":{"editor":null},"line":{"editor":null},"onAccent":{"editor":null},"displayFont":{"editor":null},"bodyFont":{"editor":null},"$preview":{"width":1440,"height":1700}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.state = { step: 0, zona: 'Antebrazo', tamano: 'Grande', estilo: 'Botánica', plan: null, fecha: 0, hora: '13:00', refUrl: '/img/tatuajes/antebrazo.webp', refName: 'referencia-peonias.jpg (ejemplo)', zonaUrl: null, zonaName: null };
+    const out = [];
+    const d = new Date();
+    d.setDate(d.getDate() + 7);
+    while (out.length < 8) {
+      const w = d.getDay();
+      if (w === 2 || w === 4 || w === 6) out.push(new Date(d.getTime()));
+      d.setDate(d.getDate() + 1);
+    }
+    this.dias = out;
+  }
+  fmt(d) { return d.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' }); }
+  money(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+  file(key, nameKey) {
+    return (e) => {
+      const f = e && e.target && e.target.files && e.target.files[0];
+      if (!f) return;
+      let u = null;
+      try { u = URL.createObjectURL(f); } catch (err) { u = null; }
+      this.setState({ [key]: u, [nameKey]: f.name });
+    };
+  }
+  renderVals() {
+    const P = this.props;
+    const s = this.state;
+    const accent = P.accent ?? '#C9A46A';
+    const bg = P.bg ?? '#0F0F10';
+    const surface = P.surface ?? '#17161A';
+    const text = P.text ?? '#ECE6DB';
+    const muted = P.muted ?? '#B5AEA2';
+    const line = P.line ?? '#3A3733';
+    const onAccent = P.onAccent ?? '#0F0F10';
+    const displayFont = P.displayFont ?? "'Cormorant Garamond', serif";
+    const bodyFont = P.bodyFont ?? "'Manrope', sans-serif";
+    const artista = P.artista ?? '[Nombre del artista]';
+    const precio = P.precioSesion ?? 250;
+    const desc = P.descuento ?? 10;
+    const dep = P.deposito ?? 100;
+    const money = (n) => this.money(n);
+    const chip = (on) => ({ bg: on ? accent : 'transparent', fg: on ? onAccent : text, border: on ? accent : line });
+    const go = (i) => () => this.setState({ step: i });
+
+    const pasosDef = [['Tu idea', 'Fotos y detalles'], ['Evaluación', 'Plan y precio'], ['Fechas', 'Elige tus días'], ['Confirmación', 'Tu cita']];
+    const pasos = pasosDef.map((p, i) => {
+      const on = s.step === i;
+      const done = s.step > i;
+      return { n: done ? '✓' : String(i + 1), t: p[0], d: p[1], go: go(i), bg: on ? surface : 'transparent', border: on ? accent : line, dotBg: on || done ? accent : 'transparent', dotBorder: on || done ? accent : line, dotFg: on || done ? onAccent : muted };
+    });
+
+    const zonas = ['Antebrazo', 'Brazo', 'Espalda', 'Costillas', 'Pierna', 'Otra zona'].map((z) => ({ label: z, pick: () => this.setState({ zona: z }), ...chip(s.zona === z) }));
+    const TAM = [
+      { k: 'Pequeño', d: 'menos de 8 cm', n: 1, h: 2 },
+      { k: 'Mediano', d: '8–15 cm', n: 1, h: 3 },
+      { k: 'Grande', d: '15–25 cm', n: 2, h: 4 },
+      { k: 'Muy grande', d: '25 cm o más', n: 3, h: 5 },
+      { k: 'Pieza completa', d: 'manga o espalda', n: 5, h: 6 }
+    ];
+    const tamanos = TAM.map((t) => ({ label: t.k, d: t.d, pick: () => this.setState({ tamano: t.k, plan: null }), ...chip(s.tamano === t.k) }));
+    const t = TAM.find((x) => x.k === s.tamano) || TAM[2];
+    const n = t.n;
+
+    const multiTotal = n * precio;
+    const singleTotal = Math.round(n * precio * (1 - desc / 100));
+    const opts = [];
+    if (n > 1) opts.push({ id: 'multi', badge: 'Recomendado por ' + artista, t: 'En ' + n + ' sesiones', sub: n + ' × ' + money(precio) + ' · ~' + t.h + ' h por sesión', total: multiTotal, antes: '' });
+    if (n <= 2) opts.push({ id: 'single', badge: 'Una sola sesión · ahorras ' + money(multiTotal - singleTotal) + ' (−' + desc + '%)', t: n === 1 ? 'En una sesión' : 'Todo en una sesión larga', sub: '~' + (t.h * n) + ' h con descansos', total: singleTotal, antes: money(multiTotal) });
+    const planId = opts.some((o) => o.id === s.plan) ? s.plan : opts[0].id;
+    const opciones = opts.map((o) => {
+      const on = o.id === planId;
+      return { badge: o.badge, t: o.t, sub: o.sub, antes: o.antes, totalTxt: money(o.total), pick: () => this.setState({ plan: o.id }), bg: on ? surface : 'transparent', border: on ? accent : line, marca: on ? 'Seleccionado' : 'Elegir' };
+    });
+    const elegido = opts.find((o) => o.id === planId);
+    const single = planId === 'single';
+    const total = elegido.total;
+    const nSes = single ? 1 : n;
+    const porSesion = total / nSes;
+    const NOMBRES = { 1: ['Diseño final, contorno y sombreado'], 2: ['Contorno y base', 'Sombreado y detalle'], 3: ['Contorno', 'Sombreado', 'Detalle y retoque'], 5: ['Contorno general', 'Sombreado · parte 1', 'Sombreado · parte 2', 'Detalle y luces', 'Retoque final'] };
+    const nombres = single ? [n === 1 ? NOMBRES[1][0] : 'Pieza completa en una sesión'] : NOMBRES[n];
+    const base = this.dias[s.fecha] || this.dias[0];
+    const sesiones = nombres.map((nm, i) => {
+      const d = new Date(base.getTime());
+      d.setDate(d.getDate() + 28 * i);
+      return { n: String(i + 1), t: nm, h: '~' + (single ? t.h * n : t.h) + ' h', p: money(porSesion), fecha: this.fmt(d) + ' · ' + s.hora };
+    });
+
+    const fechas = this.dias.map((d, i) => ({ dia: d.toLocaleDateString('es-ES', { weekday: 'short' }), num: String(d.getDate()), mes: d.toLocaleDateString('es-ES', { month: 'short' }), pick: () => this.setState({ fecha: i }), ...chip(s.fecha === i) }));
+    const horas = ['10:00', '13:00', '16:00'].map((h) => ({ label: h, pick: () => this.setState({ hora: h }), ...chip(s.hora === h) }));
+
+    const resto = Math.max(total - dep, 0);
+    const resumen = [
+      { k: 'Pieza', v: s.estilo + ' · ' + s.zona + ' · ' + t.k + ' (' + t.d + ')' },
+      { k: 'Plan', v: single ? '1 sesión con descuento' : n + ' sesiones' },
+      { k: 'Precio por sesión', v: money(porSesion) },
+      { k: 'Descuento', v: single ? '−' + desc + '% (' + money(multiTotal - singleTotal) + ')' : 'No aplica' },
+      { k: 'Total', v: money(total) },
+      { k: 'Depósito pagado', v: money(dep) + ' · se descuenta del total' },
+      { k: 'Restante', v: single ? money(resto) + ' el día de la sesión' : money(resto / nSes) + ' al final de cada sesión' }
+    ];
+
+    const nota = 'Revisé tu referencia para ' + s.zona.toLowerCase() + ', tamaño ' + t.k.toLowerCase() + ' (' + t.d + '). [COMENTARIO DEL ARTISTA: ajustes al diseño, grosor de línea y recomendaciones para la zona.]';
+
+    return {
+      artista, accent, bg, surface, text, muted, line, onAccent, displayFont, bodyFont,
+      pasos, zonas, tamanos, opciones, sesiones, fechas, horas, resumen, nota,
+      s1: s.step === 0, s2: s.step === 1, s3: s.step === 2, s4: s.step === 3,
+      toIdea: go(0), toPlan: go(1), toFechas: go(2), toConfirm: go(3),
+      hasRef: !!s.refUrl, noRef: !s.refUrl, refUrl: s.refUrl, refName: s.refName ?? 'JPG o PNG · boceto, foto o captura',
+      hasZona: !!s.zonaUrl, noZona: !s.zonaUrl, zonaUrl: s.zonaUrl, zonaName: s.zonaName ?? 'Opcional · ayuda a medir',
+      onRef: this.file('refUrl', 'refName'), onZona: this.file('zonaUrl', 'zonaName'),
+      estilo: s.estilo, setEstilo: (e) => this.setState({ estilo: e.target.value }),
+      depTxt: money(dep)
+    };
+  }
+}
+</script>
+</body>
+</html>

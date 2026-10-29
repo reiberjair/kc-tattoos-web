@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>KC Tattoos · Karla Chirinos</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&amp;family=Manrope:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0B0C}
+a{color:#EFE7D6}a:hover{color:#E8CF9A}
+.gold-text{background:linear-gradient(100deg,#9C7A3E 0%,#E8CF9A 28%,#C9A46A 48%,#F6E3B4 62%,#9C7A3E 100%);background-size:250% 100%;background-position:0 0;-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn-gold{position:relative;overflow:hidden;background:linear-gradient(135deg,#F2DDA8 0%,#C9A46A 45%,#9C7A3E 100%);color:#0B0B0C;transition:box-shadow .4s,transform .4s}
+.btn-gold:hover{color:#0B0B0C;box-shadow:0 10px 40px rgba(201,164,106,.35);transform:translateY(-2px)}
+.btn-gold::after{content:"";position:absolute;top:0;left:0;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);transform:translateX(-150%) skewX(-20deg)}
+.cv{content-visibility:auto;contain-intrinsic-size:auto 900px}
+.hero-media{position:absolute;top:0;right:0;width:78%;height:100%;overflow:hidden}
+@media (max-width: 760px){.hero-media{width:100%}.hero-img{object-position:center 30% !important}.hero-fade{background:linear-gradient(180deg,rgba(11,11,12,.82) 0%,rgba(11,11,12,.55) 26%,rgba(11,11,12,.45) 40%,rgba(11,11,12,.72) 55%,rgba(11,11,12,.9) 72%,#0B0B0C 100%) !important}.legible{text-shadow:0 1px 3px rgba(0,0,0,.9),0 0 18px rgba(0,0,0,.7)}.eyebrow{color:#F2DDA8 !important;letter-spacing:2px !important}}
+.btn-ghost{transition:background .35s,color .35s}
+.btn-ghost:hover{background:#C9A46A;color:#0B0B0C}
+.nav-link{position:relative;padding:8px 0}
+.nav-link::after{content:"";position:absolute;left:0;bottom:2px;height:1px;width:100%;background:#C9A46A;transform:scaleX(0);transform-origin:left;transition:transform .35s}
+.nav-link:hover::after{transform:scaleX(1)}
+.tile{overflow:hidden}
+.tile img{transition:transform 1s cubic-bezier(.2,.7,.2,1),filter .6s}
+.tile:hover img{transform:scale(1.06);filter:brightness(1.08) saturate(1.05)}
+.tile .corner{transition:opacity .45s,transform .45s;opacity:.55}
+.tile:hover .corner{opacity:1;transform:scale(1.06)}
+.lift{transition:transform .45s,border-color .45s,box-shadow .45s}
+.lift:hover{transform:translateY(-8px);border-color:#C9A46A;box-shadow:0 18px 50px rgba(0,0,0,.5)}
+.marquee-track{display:flex;width:max-content}
+.ring,.ink{transform-box:fill-box;transform-origin:center}
+.anim .rise{opacity:0;animation:rise 1s cubic-bezier(.2,.7,.2,1) forwards}
+.anim .d1{animation-delay:.1s}.anim .d2{animation-delay:.25s}.anim .d3{animation-delay:.4s}.anim .d4{animation-delay:.55s}.anim .d5{animation-delay:.7s}.anim .d6{animation-delay:.85s}
+.anim .btn-gold::after{animation:shine 4s ease-in-out 3}
+.anim .marquee-track{animation:marquee 46s linear infinite}
+.anim .ink{animation:drip 2.6s ease-in-out infinite}
+.anim .pen-draw{stroke-dasharray:140;stroke-dashoffset:140;animation:draw 2s ease forwards .2s}
+.anim .progress{transform-origin:left;animation:grow 2s cubic-bezier(.2,.7,.2,1) both 1s}
+.anim .line-grow{transform-origin:left;animation:grow 1.2s cubic-bezier(.2,.7,.2,1) both .2s}
+@media (min-width: 900px) and (hover: hover){
+.hero-img{will-change:transform}
+.anim .hero-img{animation:kenburns 24s ease-in-out infinite alternate}
+.anim .shimmer{animation:shimmer 7s linear infinite}
+.anim .ring{animation:spin 20s linear infinite}
+.anim .float{animation:float 6s ease-in-out infinite}
+.anim .scroll-cue{animation:cue 2.2s ease-in-out infinite}
+@supports (animation-timeline: view()){
+.anim .reveal{animation:rise linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
+.anim .reveal-line{transform-origin:left;animation:grow linear both;animation-timeline:view();animation-range:entry 10% cover 35%}
+}
+}
+@keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.08) translate(-1.5%,-1%)}}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes shimmer{from{background-position:100% 0}to{background-position:-150% 0}}
+@keyframes shine{0%,55%{transform:translateX(-150%) skewX(-20deg)}100%{transform:translateX(350%) skewX(-20deg)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes drip{0%,100%{transform:translateY(0);opacity:1}50%{transform:translateY(2px);opacity:.45}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes cue{0%,100%{transform:translateY(0);opacity:.55}50%{transform:translateY(9px);opacity:1}}
+@keyframes fill{from{width:0}to{width:50%}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@media (prefers-reduced-motion: reduce){.anim *,.anim *::after{animation:none !important;opacity:1 !important}}
+</style>
+</helmet>
+<div class="{{rootClass}}" style="background: #0B0B0C; color: #EFE7D6; font-family: 'Manrope', sans-serif; width: 100%">
+
+<section style="position: relative; min-height: 900px; display: flex; flex-direction: column; overflow: hidden">
+<div class="hero-media">
+<picture>
+<source media="(max-width: 760px)" srcset="/img/hero/hero-movil.webp">
+<img class="hero-img" src="/img/hero/hero-1920.webp" srcset="/img/hero/hero-1100.webp 1100w, /img/hero/hero-1920.webp 1672w" sizes="78vw" alt="Estudio de tatuaje en lo alto al atardecer, con el río y los rascacielos de Chicago; manos con guantes negros tatuando un brazo" fetchpriority="high" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% center">
+</picture>
+<div class="hero-fade" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(26% 46% at 100% 70%, rgba(11,11,12,0.97) 0%, rgba(11,11,12,0.8) 38%, rgba(11,11,12,0.35) 70%, rgba(11,11,12,0) 100%), linear-gradient(270deg, rgba(11,11,12,0.7) 0%, rgba(11,11,12,0) 7%), linear-gradient(0deg, #0B0B0C 0%, rgba(11,11,12,0) 26%), linear-gradient(180deg, rgba(11,11,12,0.55) 0%, rgba(11,11,12,0) 20%), linear-gradient(90deg, #0B0B0C 0%, rgba(11,11,12,0.78) 12%, rgba(11,11,12,0.32) 38%, rgba(11,11,12,0.1) 100%)"></div>
+</div>
+<div aria-hidden="true" style="position: absolute; top: 18px; left: 18px; right: 18px; bottom: 18px; border: 1px solid rgba(201,164,106,0.38); pointer-events: none"></div>
+
+<header style="position: relative; max-width: 1320px; width: 100%; box-sizing: border-box; margin: 0 auto; padding: 40px 40px 28px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between">
+<div class="rise" style="display: flex; align-items: center; gap: 14px">
+<svg width="40" height="40" viewBox="0 0 32 32" fill="none" stroke="#C9A46A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g transform="rotate(-45 16 16)"><path class="pen-draw" d="M1 16h4 M5 16l4-2.6v5.2z M9 13h8v6H9z M18.5 12.6v6.8 M19.5 12.4h9v7.2h-9z M28.5 16c2 0 2.5-2 2.5-3.5"></path></g><circle class="ink" cx="4.2" cy="28" r="1.4" fill="#E8CF9A" stroke="none"></circle></svg>
+<span class="gold-text" style="font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 500; letter-spacing: 6px; text-transform: uppercase">KC Tattoos</span>
+</div>
+<nav class="rise d1 legible" style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center; font-size: 13px; letter-spacing: 2px; text-transform: uppercase">
+<a class="nav-link" href="#obra" style="text-decoration: none">Obra</a>
+<a class="nav-link" href="#proceso" style="text-decoration: none">Proceso</a>
+<a class="nav-link" href="#objetos" style="text-decoration: none">Objetos</a>
+<a class="nav-link" href="#notas" style="text-decoration: none">Notas</a>
+<a class="btn-ghost" href="#reserva" style="text-decoration: none; border: 1px solid #C9A46A; color: #E8CF9A; padding: 14px 22px">Solicitar sesión</a>
+</nav>
+</header>
+
+<div style="position: relative; flex: 1; max-width: 1320px; width: 100%; box-sizing: border-box; margin: 0 auto; padding: 40px 40px 110px; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 40px">
+<div style="flex: 1 1 560px; display: flex; flex-direction: column; gap: 28px">
+<div class="rise d1" style="display: flex; align-items: center; gap: 14px">
+<span class="line-grow" style="display: block; width: 56px; height: 1px; background: #C9A46A"></span>
+<span class="eyebrow legible" style="font-size: 13px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: #E8CF9A">Fine line · Micro-realismo · Botánica — [CIUDAD]</span>
+</div>
+<h1 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(58px, 7.4vw, 124px); line-height: 0.96; max-width: 800px">
+<span class="rise d2" style="display: block">Líneas finas</span>
+<span class="rise d3" style="display: block; padding-bottom: 6px"><span class="gold-text shimmer" style="font-style: italic; font-weight: 500">para historias</span></span>
+<span class="rise d4" style="display: block">que duran.</span>
+</h1>
+<p class="rise d5 legible" style="margin: 0; font-size: 18px; line-height: 1.7; color: #D4CCBE; max-width: 520px">El estudio privado de Karla Chirinos, una sola persona por día. Envías una foto de tu idea y recibes un plan de sesiones con precio cerrado antes de reservar.</p>
+<div class="rise d6" style="display: flex; flex-wrap: wrap; gap: 24px; align-items: center">
+<a class="btn-gold" href="#reserva" style="text-decoration: none; padding: 20px 32px; font-weight: 700; font-size: 14px; letter-spacing: 2px; text-transform: uppercase">Enviar mi idea</a>
+<a class="nav-link" href="#obra" style="font-size: 15px; color: #E8CF9A; text-decoration: none">Ver la obra →</a>
+</div>
+</div>
+<div class="rise d6" style="flex: 0 1 320px">
+<div class="float" style="background: rgba(11,11,12,0.72); border: 1px solid rgba(201,164,106,0.55); padding: 22px 24px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
+<span style="font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #D9BC82">Sesión en curso</span>
+<span style="width: 8px; height: 8px; border-radius: 50%; background: #E8CF9A; box-shadow: 0 0 12px #E8CF9A"></span>
+</div>
+<span style="font-family: 'Cormorant Garamond', serif; font-size: 28px">Manga realista · antebrazo</span>
+<div style="height: 3px; background: rgba(201,164,106,0.2)"><div class="progress" style="height: 3px; width: 50%; background: linear-gradient(90deg, #9C7A3E, #F2DDA8)"></div></div>
+<div style="display: flex; justify-content: space-between; font-size: 13px; color: #B9B0A2"><span>Sesión 2 de 4 · sombreado</span><span>50 %</span></div>
+</div>
+</div>
+</div>
+
+<div class="scroll-cue" aria-hidden="true" style="position: absolute; left: 50%; bottom: 36px; margin-left: -1px; display: flex; flex-direction: column; align-items: center; gap: 8px">
+<span style="width: 1px; height: 40px; background: linear-gradient(180deg, rgba(201,164,106,0), #C9A46A)"></span>
+</div>
+</section>
+
+<div style="border-top: 1px solid #6E5830; border-bottom: 1px solid #6E5830; background: #100F0D; overflow: hidden; padding: 20px 0">
+<div class="marquee-track">
+<sc-for list="{{marquee}}" as="m" hint-placeholder-count="12">
+<span style="display: flex; align-items: center; gap: 36px; padding-right: 36px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 34px; white-space: nowrap; color: #E8CF9A">{{m}}<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 0L8.6 5.4 14 7 8.6 8.6 7 14 5.4 8.6 0 7 5.4 5.4Z" fill="#C9A46A"></path></svg></span>
+</sc-for>
+</div>
+</div>
+
+<section style="border-bottom: 1px solid #2E2A24">
+<div style="max-width: 1320px; margin: 0 auto; padding: 30px 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px">
+<div class="reveal" style="display: flex; gap: 12px; align-items: center; font-size: 14px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9A46A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l10-10"></path><path d="M12 8l4 4"></path><path d="M15 5l4 4-3 3-4-4z"></path></svg>Agujas estériles de un solo uso</div>
+<div class="reveal" style="display: flex; gap: 12px; align-items: center; font-size: 14px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9A46A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"></path></svg>Tintas certificadas · [MARCA]</div>
+<div class="reveal" style="display: flex; gap: 12px; align-items: center; font-size: 14px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9A46A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path><path d="M9 12l2 2 4-4"></path></svg>Licencia sanitaria [Nº]</div>
+<div class="reveal" style="display: flex; gap: 12px; align-items: center; font-size: 14px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9A46A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"></rect><path d="M4 10h16"></path><path d="M9 3v4"></path><path d="M15 3v4"></path></svg>Revisión de cicatrización incluida</div>
+</div>
+</section>
+
+<section id="proceso" style="max-width: 1320px; margin: 0 auto; padding: 110px 32px">
+<div class="reveal" style="display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; margin-bottom: 64px">
+<span style="font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: #D9BC82">Cómo trabajamos</span>
+<h2 class="gold-text" style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 64px">El proceso</h2>
+<div style="display: flex; align-items: center; gap: 12px"><span class="reveal-line" style="display: block; width: 80px; height: 1px; background: #C9A46A"></span><svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 0L8.6 5.4 14 7 8.6 8.6 7 14 5.4 8.6 0 7 5.4 5.4Z" fill="#C9A46A"></path></svg><span class="reveal-line" style="display: block; width: 80px; height: 1px; background: #C9A46A"></span></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px">
+<sc-for list="{{pasos}}" as="p" hint-placeholder-count="4">
+<div class="reveal lift" style="display: flex; flex-direction: column; gap: 16px; padding: 32px 26px; border: 1px solid #2E2A24; background: #111012">
+<div style="position: relative; width: 72px; height: 72px">
+<svg class="ring" width="72" height="72" viewBox="0 0 72 72" aria-hidden="true" style="position: absolute; top: 0; left: 0"><circle cx="36" cy="36" r="34" fill="none" stroke="#C9A46A" stroke-width="1" stroke-dasharray="3 6"></circle></svg>
+<span class="gold-text" style="position: absolute; top: 0; left: 0; width: 72px; height: 72px; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: 30px">{{p.n}}</span>
+</div>
+<span style="font-size: 20px; font-weight: 500">{{p.t}}</span>
+<span style="font-size: 16px; line-height: 1.65; color: #B9B0A2">{{p.d}}</span>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section id="obra" class="cv" style="max-width: 1320px; margin: 0 auto; padding: 0 32px 110px">
+<div class="reveal" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 44px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: #D9BC82">Portafolio</span>
+<h2 class="gold-text" style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 64px">Obra reciente</h2>
+</div>
+<span style="font-size: 14px; color: #A39C90">Fotos de muestra para la demo</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px">
+<sc-for list="{{obra}}" as="o" hint-placeholder-count="6">
+<figure class="reveal" style="margin: 0; display: flex; flex-direction: column; gap: 16px">
+<div class="tile" style="position: relative; aspect-ratio: 4 / 5; border: 1px solid #3A3226">
+<img src="{{o.img}}" alt="{{o.t}}" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: cover">
+<span class="corner" aria-hidden="true" style="position: absolute; top: 12px; left: 12px; width: 28px; height: 28px; border-top: 1px solid #E8CF9A; border-left: 1px solid #E8CF9A"></span>
+<span class="corner" aria-hidden="true" style="position: absolute; bottom: 12px; right: 12px; width: 28px; height: 28px; border-bottom: 1px solid #E8CF9A; border-right: 1px solid #E8CF9A"></span>
+<span style="position: absolute; top: 16px; right: 16px; font-size: 12px; letter-spacing: 2px; color: #0B0B0C; background: linear-gradient(135deg, #F2DDA8, #C9A46A); padding: 6px 10px; font-weight: 700">{{o.n}}</span>
+</div>
+<figcaption style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 1px solid #2E2A24; padding-bottom: 14px">
+<span style="font-family: 'Cormorant Garamond', serif; font-size: 28px">{{o.t}}</span>
+<span style="font-size: 13px; color: #D9BC82">{{o.meta}}</span>
+</figcaption>
+</figure>
+</sc-for>
+</div>
+</section>
+
+<section style="background: #100F0D; border-top: 1px solid #2E2A24; border-bottom: 1px solid #2E2A24">
+<div style="max-width: 1320px; margin: 0 auto; padding: 110px 32px; display: flex; flex-wrap: wrap; gap: 64px; align-items: center">
+<div class="reveal" style="flex: 1 1 480px; min-width: 0; padding: 14px; border: 1px solid #6E5830">
+<div class="tile" style="height: 440px; border: 1px solid #3A3226">
+<img src="/img/hero/estudio-manos-1000.webp" alt="Detalle de las manos con guantes y la máquina pen trabajando una manga realista" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: 88% center">
+</div>
+</div>
+<div class="reveal" style="flex: 1 1 380px; display: flex; flex-direction: column; gap: 22px">
+<span style="font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: #D9BC82">El equipo</span>
+<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 50px; line-height: 1.05">Máquina rotativa tipo pen, <em class="gold-text" style="font-weight: 500">stencil a mano</em> y tinta nueva en cada sesión.</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.7; color: #B9B0A2">Cada pieza empieza como un dibujo en papel que se transfiere a la piel. Así ves la posición exacta antes del primer trazo.</p>
+<span style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 22px; color: #E8CF9A">— Karla Chirinos, fundadora de KC Tattoos</span>
+</div>
+</div>
+</section>
+
+<section id="objetos" class="cv" style="max-width: 1320px; margin: 0 auto; padding: 110px 32px">
+<div class="reveal" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 44px">
+<span style="font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: #D9BC82">Tienda</span>
+<h2 class="gold-text" style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 64px">Objetos</h2>
+<p style="margin: 0; font-size: 16px; color: #B9B0A2">Lo que uso en el estudio y obra original para llevar a casa.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px">
+<sc-for list="{{objetos}}" as="o" hint-placeholder-count="4">
+<div class="reveal lift" style="display: flex; flex-direction: column; gap: 12px; border: 1px solid #2E2A24; background: #111012; padding: 14px">
+<div class="tile" style="aspect-ratio: 1 / 1"><img src="{{o.img}}" alt="{{o.t}}" style="display: block; width: 100%; height: 100%; object-fit: cover"></div>
+<span style="font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #D9BC82; margin-top: 6px">{{o.tag}}</span>
+<span style="font-family: 'Cormorant Garamond', serif; font-size: 26px">{{o.t}}</span>
+<div style="display: flex; justify-content: space-between; align-items: center">
+<span class="gold-text" style="font-size: 17px; font-weight: 700">[PRECIO]</span>
+<button class="btn-ghost" type="button" style="min-height: 44px; padding: 0 18px; background: transparent; border: 1px solid #C9A46A; color: #E8CF9A; font-family: 'Manrope', sans-serif; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer">Añadir</button>
+</div>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section id="notas" class="cv" style="max-width: 1320px; margin: 0 auto; padding: 0 32px 110px">
+<h2 class="reveal gold-text" style="margin: 0 0 40px; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 64px">Notas del estudio</h2>
+<sc-for list="{{notas}}" as="n" hint-placeholder-count="3">
+<a class="reveal" href="#notas" style="text-decoration: none; display: flex; flex-wrap: wrap; gap: 16px 40px; align-items: baseline; padding: 30px 0; border-top: 1px solid #3A3226">
+<span style="flex: 0 0 140px; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: #D9BC82">{{n.cat}}</span>
+<span style="flex: 1 1 380px; font-family: 'Cormorant Garamond', serif; font-size: 34px; line-height: 1.15">{{n.t}}</span>
+<span style="flex: 1 1 260px; font-size: 16px; line-height: 1.6; color: #B9B0A2">{{n.d}}</span>
+</a>
+</sc-for>
+</section>
+
+<div aria-hidden="true" style="display: flex; align-items: center; justify-content: center; gap: 16px; padding: 0 32px 8px">
+<span class="reveal-line" style="display: block; flex: 0 1 280px; height: 1px; background: linear-gradient(90deg, rgba(201,164,106,0), #C9A46A)"></span>
+<svg width="34" height="34" viewBox="0 0 32 32" fill="none" stroke="#C9A46A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(-45 16 16)"><path d="M1 16h4 M5 16l4-2.6v5.2z M9 13h8v6H9z M18.5 12.6v6.8 M19.5 12.4h9v7.2h-9z"></path></g><circle class="ink" cx="4.2" cy="28" r="1.4" fill="#E8CF9A" stroke="none"></circle></svg>
+<span class="reveal-line" style="display: block; flex: 0 1 280px; height: 1px; background: linear-gradient(270deg, rgba(201,164,106,0), #C9A46A)"></span>
+</div>
+
+<dc-import name="Reserva" artista="Karla Chirinos" accent="#C9A46A" bg="#0B0B0C" surface="#141311" text="#EFE7D6" muted="#B9B0A2" line="#3A3226" on-accent="#0B0B0C" display-font="'Cormorant Garamond', serif" body-font="'Manrope', sans-serif" hint-size="100%,1700px"></dc-import>
+
+<footer style="border-top: 1px solid #6E5830; background: #100F0D">
+<div style="max-width: 1320px; margin: 0 auto; padding: 64px 32px 32px; display: flex; flex-direction: column; gap: 28px">
+<span class="gold-text shimmer" style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: clamp(56px, 9vw, 140px); line-height: 1">KC Tattoos</span>
+<div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; font-size: 13px; color: #A39C90; border-top: 1px solid #2E2A24; padding-top: 20px">
+<span>Karla Chirinos · Estudio privado con cita previa · [DIRECCIÓN, CIUDAD]</span>
+<span>Instagram · Pinterest · Email</span>
+</div>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"animaciones":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":5800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const anim = this.props.animaciones ?? true;
+    const estilos = ['Fine line', 'Micro-realismo', 'Botánica', 'Lettering fino', 'Geométrico', 'Diseño a medida'];
+    return {
+      rootClass: anim ? 'anim' : '',
+      marquee: estilos.concat(estilos),
+      pasos: [
+        { n: 'I', t: 'Envías tu foto', d: 'Una referencia de lo que quieres y una foto de la zona del cuerpo.' },
+        { n: 'II', t: 'Evaluación y plan', d: 'Karla estudia la pieza y te dice cuántas sesiones necesita y cuánto cuesta cada una.' },
+        { n: 'III', t: 'Sesiones', d: 'Eliges fechas. Si cabe en una sola sesión, tiene descuento.' },
+        { n: 'IV', t: 'Cuidado', d: 'Guía de cicatrización y una revisión a las [X] semanas.' }
+      ],
+      obra: [
+        { n: '01', img: '/img/tatuajes/lobo.webp', t: 'Lobo y bosque', meta: 'Pantorrilla · realismo' },
+        { n: '02', img: '/img/tatuajes/antebrazo.webp', t: 'Peonías', meta: 'Antebrazo · botánica' },
+        { n: '03', img: '/img/tatuajes/muslo.webp', t: 'Peonía y mariposa', meta: 'Muslo · botánica' },
+        { n: '04', img: '/img/tatuajes/hombro.webp', t: 'Mandala', meta: 'Hombro · ornamental' },
+        { n: '05', img: '/img/tatuajes/costillas.webp', t: 'Rama en flor', meta: 'Costillas · fine line' },
+        { n: '06', img: '/img/tatuajes/clavicula.webp', t: 'Guirnalda', meta: 'Clavícula · fine line' },
+        { n: '07', img: '/img/tatuajes/tobillo.webp', t: 'Luna y flores', meta: 'Tobillo · fine line' },
+        { n: '08', img: '/img/tatuajes/mano.webp', t: 'Ornamental', meta: 'Mano · blackwork' }
+      ],
+      objetos: [
+        { img: '/img/productos/balsamo.svg', tag: 'Cuidado', t: 'Bálsamo de cicatrización' },
+        { img: '/img/productos/protector.svg', tag: 'Cuidado', t: 'Protector solar para tatuajes' },
+        { img: '/img/productos/original.svg', tag: 'Obra', t: 'Dibujo original enmarcado' },
+        { img: '/img/productos/tarjeta.svg', tag: 'Regalo', t: 'Tarjeta regalo' }
+      ],
+      notas: [
+        { cat: 'Técnica', t: '¿Se borra el fine line con los años?', d: 'Qué influye de verdad: profundidad, zona, sol y cuidado.' },
+        { cat: 'Ideas', t: 'Cómo convertir un recuerdo en un diseño', d: 'De una historia personal a un símbolo que funcione en la piel.' },
+        { cat: 'Sesiones', t: '¿Por qué algunas piezas necesitan varias sesiones?', d: 'Tamaño, zona y cicatrización: cómo se calcula tu plan.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

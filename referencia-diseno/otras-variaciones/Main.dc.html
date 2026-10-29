@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Tinta Cruda</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Archivo:wght@400;600;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#EDEAE3}
+a{color:#0B0B0B}a:hover{color:#B81E0A}
+</style>
+</helmet>
+<div style="background: #EDEAE3; color: #0B0B0B; font-family: 'Archivo', sans-serif; width: 100%">
+
+<header style="border-bottom: 3px solid #0B0B0B; padding: 18px 32px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between">
+<div style="font-family: 'Anton', sans-serif; font-size: 30px; letter-spacing: 1px; text-transform: uppercase">[NOMBRE] Tattoo</div>
+<nav style="display: flex; flex-wrap: wrap; gap: 24px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 14px; text-transform: uppercase">
+<a href="#trabajo" style="text-decoration: none">Trabajo</a>
+<a href="#servicios" style="text-decoration: none">Servicios</a>
+<a href="#tienda" style="text-decoration: none">Tienda</a>
+<a href="#diario" style="text-decoration: none">Diario</a>
+<a href="#reservar" style="text-decoration: none; background: {{accent}}; color: #FFFFFF; padding: 14px 22px; font-weight: 600">Reservar cita →</a>
+</nav>
+</header>
+
+<section style="padding: 40px 32px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; align-items: end">
+<div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; text-transform: uppercase; margin-bottom: 16px">Blackwork · Realismo · Custom — [CIUDAD]</div>
+<h1 style="margin: 0; font-family: 'Anton', sans-serif; font-size: clamp(72px, 11vw, 176px); line-height: 0.86; text-transform: uppercase; letter-spacing: -1px">Tinta<br>que no<br><span style="color: {{accent}}">se borra.</span></h1>
+</div>
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="height: 460px; background: repeating-linear-gradient(45deg, #0B0B0B 0 2px, #D9D5CC 2px 14px); border: 3px solid #0B0B0B; display: flex; align-items: flex-end"><span style="background: #0B0B0B; color: #EDEAE3; font-family: 'JetBrains Mono', monospace; font-size: 13px; padding: 8px 12px">[FOTO: pieza insignia, b/n, alto contraste]</span></div>
+<p style="margin: 0; font-size: 19px; line-height: 1.45; max-width: 520px">Diseños únicos, hechos una sola vez. Sin copias de Pinterest, sin plantillas. Tú traes la idea; yo la convierto en algo que va a envejecer bien en tu piel.</p>
+</div>
+</section>
+
+<div style="margin-top: 48px; background: #0B0B0B; color: #EDEAE3; padding: 18px 32px; font-family: 'Anton', sans-serif; font-size: 34px; text-transform: uppercase; white-space: nowrap; overflow: hidden">Custom ✕ Flash ✕ Cover-up ✕ Retoques ✕ Custom ✕ Flash ✕ Cover-up ✕ Retoques</div>
+
+<section id="servicios" style="padding: 80px 32px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 16px; border-bottom: 3px solid #0B0B0B; padding-bottom: 16px">
+<h2 style="margin: 0; font-family: 'Anton', sans-serif; font-size: 72px; text-transform: uppercase">Servicios</h2>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px">Depósito para agendar: [MONTO]</span>
+</div>
+<sc-for list="{{servicios}}" as="s" hint-placeholder-count="4">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; padding: 28px 0; border-bottom: 1px solid #0B0B0B; align-items: baseline">
+<div style="font-family: 'Anton', sans-serif; font-size: 44px; color: {{accent}}">{{s.n}}</div>
+<div style="font-family: 'Anton', sans-serif; font-size: 40px; text-transform: uppercase">{{s.t}}</div>
+<div style="font-size: 17px; line-height: 1.45">{{s.d}}</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; text-align: right">{{s.p}}</div>
+</div>
+</sc-for>
+</section>
+
+<section id="trabajo" style="padding: 0 32px 80px">
+<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; margin-bottom: 24px">
+<h2 style="margin: 0; font-family: 'Anton', sans-serif; font-size: 72px; text-transform: uppercase">Trabajo</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{filtros}}" as="f" hint-placeholder-count="5">
+<button type="button" onClick="{{f.pick}}" style="font-family: 'JetBrains Mono', monospace; font-size: 13px; text-transform: uppercase; padding: 12px 16px; min-height: 44px; border: 2px solid #0B0B0B; background: {{f.bg}}; color: {{f.fg}}; cursor: pointer">{{f.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px">
+<sc-for list="{{piezas}}" as="p" hint-placeholder-count="6">
+<div style="height: 340px; background: #0B0B0B; color: #EDEAE3; display: flex; flex-direction: column; justify-content: space-between; padding: 16px; box-sizing: border-box">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #A8A49C">[FOTO {{p.n}}]</span>
+<div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 13px"><span>{{p.estilo}}</span><span>{{p.zona}}</span></div>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section id="tienda" style="background: #0B0B0B; color: #EDEAE3; padding: 80px 32px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 16px; border-bottom: 3px solid #EDEAE3; padding-bottom: 16px; margin-bottom: 32px">
+<h2 style="margin: 0; font-family: 'Anton', sans-serif; font-size: 72px; text-transform: uppercase">Flash &amp; Tienda</h2>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px">Cada flash se tatúa una sola vez</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px">
+<sc-for list="{{productos}}" as="pr" hint-placeholder-count="4">
+<div style="border: 2px solid #EDEAE3; display: flex; flex-direction: column">
+<div style="height: 240px; background: repeating-linear-gradient(-45deg, #2A2A2A 0 2px, #141414 2px 12px); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #A8A49C">[{{pr.img}}]</div>
+<div style="padding: 16px; display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: {{accentLight}}; text-transform: uppercase">{{pr.tag}}</span>
+<span style="font-family: 'Anton', sans-serif; font-size: 26px; text-transform: uppercase">{{pr.t}}</span>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 15px">[PRECIO]</span>
+<a href="#reservar" style="color: #EDEAE3; font-weight: 600; font-size: 15px; padding: 12px 0">{{pr.cta}} →</a>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section id="diario" style="padding: 80px 32px">
+<h2 style="margin: 0 0 32px; font-family: 'Anton', sans-serif; font-size: 72px; text-transform: uppercase; border-bottom: 3px solid #0B0B0B; padding-bottom: 16px">Diario / Ideas</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px">
+<sc-for list="{{posts}}" as="po" hint-placeholder-count="3">
+<a href="#diario" style="text-decoration: none; display: flex; flex-direction: column; gap: 12px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #B81E0A">{{po.cat}}</span>
+<span style="font-family: 'Anton', sans-serif; font-size: 34px; line-height: 1.05; text-transform: uppercase">{{po.t}}</span>
+<span style="font-size: 16px; line-height: 1.5; color: #3A3A3A">{{po.d}}</span>
+</a>
+</sc-for>
+</div>
+</section>
+
+<section id="reservar" style="background: {{accent}}; color: #FFFFFF; padding: 80px 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 48px">
+<div>
+<h2 style="margin: 0; font-family: 'Anton', sans-serif; font-size: clamp(64px, 8vw, 120px); line-height: 0.9; text-transform: uppercase">Cuéntame<br>tu idea.</h2>
+<p style="font-size: 18px; line-height: 1.5; max-width: 420px">Respondo en [X] días hábiles con propuesta, presupuesto y fechas disponibles. Agenda abierta: [MES].</p>
+</div>
+<form style="display: flex; flex-direction: column; gap: 16px">
+<label style="display: flex; flex-direction: column; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 13px; text-transform: uppercase">Nombre<input type="text" style="height: 48px; border: 2px solid #FFFFFF; background: transparent; color: #FFFFFF; font-size: 17px; padding: 0 12px"></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 13px; text-transform: uppercase">Email o WhatsApp<input type="text" style="height: 48px; border: 2px solid #FFFFFF; background: transparent; color: #FFFFFF; font-size: 17px; padding: 0 12px"></label>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px">
+<label style="display: flex; flex-direction: column; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 13px; text-transform: uppercase">Zona del cuerpo<input type="text" style="height: 48px; border: 2px solid #FFFFFF; background: transparent; color: #FFFFFF; font-size: 17px; padding: 0 12px"></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 13px; text-transform: uppercase">Tamaño aprox. (cm)<input type="text" style="height: 48px; border: 2px solid #FFFFFF; background: transparent; color: #FFFFFF; font-size: 17px; padding: 0 12px"></label>
+</div>
+<label style="display: flex; flex-direction: column; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 13px; text-transform: uppercase">Tu idea<textarea rows="4" style="border: 2px solid #FFFFFF; background: transparent; color: #FFFFFF; font-size: 17px; padding: 12px"></textarea></label>
+<button type="button" style="height: 60px; background: #0B0B0B; color: #FFFFFF; border: none; font-family: 'Anton', sans-serif; font-size: 24px; text-transform: uppercase; cursor: pointer">Enviar solicitud</button>
+</form>
+</section>
+
+<footer style="padding: 32px; display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 13px; text-transform: uppercase">
+<span>[DIRECCIÓN DEL ESTUDIO] · [HORARIO]</span>
+<span>Instagram · TikTok · WhatsApp</span>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#C8210B","options":["#C8210B","#0B0B0B","#1F4FD6"]},"$preview":{"width":1440,"height":4400}}'>
+class Component extends DCLogic {
+  constructor(p){ super(p); this.state = { filtro: 'Todo' }; }
+  renderVals() {
+    const accent = this.props.accent ?? '#C8210B';
+    const labels = ['Todo','Blackwork','Realismo','Fine line','Cover-up'];
+    const filtros = labels.map((l) => ({ label: l, bg: this.state.filtro === l ? '#0B0B0B' : 'transparent', fg: this.state.filtro === l ? '#EDEAE3' : '#0B0B0B', pick: () => this.setState({ filtro: l }) }));
+    const todas = [
+      { n: '01', estilo: 'Blackwork', zona: 'Antebrazo' },
+      { n: '02', estilo: 'Realismo', zona: 'Espalda' },
+      { n: '03', estilo: 'Fine line', zona: 'Costillas' },
+      { n: '04', estilo: 'Cover-up', zona: 'Hombro' },
+      { n: '05', estilo: 'Blackwork', zona: 'Pierna' },
+      { n: '06', estilo: 'Realismo', zona: 'Brazo' }
+    ];
+    const piezas = this.state.filtro === 'Todo' ? todas : todas.filter((p) => p.estilo === this.state.filtro);
+    return {
+      accent,
+      accentLight: '#FF8A73',
+      filtros,
+      piezas,
+      servicios: [
+        { n: '01', t: 'Diseño custom', d: 'Pieza original a partir de tu idea. Incluye consulta y boceto.', p: 'Desde [PRECIO] · [X] h' },
+        { n: '02', t: 'Flash', d: 'Diseños ya dibujados, listos para tatuar. Precio cerrado.', p: '[PRECIO] fijo' },
+        { n: '03', t: 'Cover-up', d: 'Cubrir o rediseñar un tatuaje antiguo. Requiere foto previa.', p: 'Desde [PRECIO]' },
+        { n: '04', t: 'Retoques', d: 'Para piezas hechas en el estudio, dentro de [X] meses.', p: '[GRATIS / PRECIO]' }
+      ],
+      productos: [
+        { tag: 'Flash', t: 'Daga y serpiente', img: 'FLASH', cta: 'Apartar' },
+        { tag: 'Flash', t: 'Polilla nocturna', img: 'FLASH', cta: 'Apartar' },
+        { tag: 'Aftercare', t: 'Bálsamo de cuidado', img: 'PRODUCTO', cta: 'Comprar' },
+        { tag: 'Print', t: 'Lámina firmada A3', img: 'PRINT', cta: 'Comprar' }
+      ],
+      posts: [
+        { cat: 'Cuidados', t: 'Las primeras 72 horas de tu tatuaje', d: 'Qué hacer, qué evitar y cuándo preocuparse.' },
+        { cat: 'Estilos', t: 'Fine line vs. blackwork: qué envejece mejor', d: 'Cómo cambia cada estilo con los años en la piel.' },
+        { cat: 'Primera vez', t: 'Cómo preparar tu primera sesión', d: 'Comer, dormir, ropa y qué traer el día de la cita.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
