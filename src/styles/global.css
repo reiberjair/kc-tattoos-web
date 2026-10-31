@@ -9,9 +9,11 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;line-height:1.02}
 h2{font-size:clamp(40px,5.2vw,68px)}
 .rule{display:flex;align-items:center;gap:14px;color:var(--gold)}
 .rule i{display:block;width:48px;height:1px;background:var(--gold)}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 34px;font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--gold);transition:.35s;cursor:pointer;font-family:var(--sans)}
-.btn.solid{background:linear-gradient(135deg,#F2DDA8,#C9A46A 50%,#9C7A3E);color:#0B0B0C;border-color:transparent}
-.btn.solid:hover{box-shadow:0 12px 40px rgba(201,164,106,.3);transform:translateY(-2px)}
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 34px;font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--gold);border-radius:999px;transition:.35s;cursor:pointer;font-family:var(--sans)}
+.btn.solid{background:linear-gradient(135deg,#F6E3B4,#C9A46A 50%,#9C7A3E);color:#0B0B0C;border-color:transparent;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -1px 0 rgba(0,0,0,.18),0 0 0 1px rgba(201,164,106,.35),0 0 0 5px rgba(201,164,106,.08)}
+.btn.solid::after{content:"";position:absolute;top:0;left:0;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:translateX(-160%) skewX(-20deg);transition:transform .9s ease}
+.btn.solid:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 0 1px rgba(232,207,154,.6),0 0 0 6px rgba(201,164,106,.12),0 14px 40px rgba(201,164,106,.3);transform:translateY(-2px)}
+.btn.solid:hover::after{transform:translateX(360%) skewX(-20deg)}
 .btn.line{color:var(--gold-l)}.btn.line:hover{background:var(--gold);color:#0B0B0C}
 body{position:relative}
 section,footer,.wrap{position:relative;z-index:1}
@@ -19,18 +21,14 @@ section,footer,.wrap{position:relative;z-index:1}
 /* GOLD THREADS: page-long cursive lines; on desktop they are "tattooed" as you scroll (threads.js) */
 .threads{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .threads svg{position:absolute;inset:0;width:100%;height:100%}
-.threads path{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-.threads .base path{stroke:#C9A46A;opacity:.18}
-.threads .halo path,.threads .draw{stroke-dasharray:1;stroke-dashoffset:1}
-.threads .halo,.threads .ink,.threads .tip,.threads .sparks{display:none}
+.threads path{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.threads .base path{stroke:#C9A46A;opacity:.18;vector-effect:non-scaling-stroke}
+.threads .halo,.threads .ink,.threads .sparks{display:none}
 .threads .halo path{stroke:#E8CF9A;opacity:.07}
 .threads .draw{stroke:url(#thread-gold);opacity:.95}
 .threads .sparks{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none}
 .threads.live .base{display:none}
 .threads.live .halo,.threads.live .ink,.threads.live .sparks{display:block}
-.threads.live .tip.on{display:block}
-.threads .tip-halo{transform-box:fill-box;transform-origin:center;animation:tip-pulse 1.6s ease-in-out infinite}
-@keyframes tip-pulse{50%{transform:scale(1.35);opacity:.65}}
 
 /* HERO */
 .hero{min-height:100svh;min-height:820px;display:flex;flex-direction:column;overflow:hidden}
@@ -91,7 +89,7 @@ nav.links a.lang::after{display:none}
 .panel .quote{font-family:var(--serif);font-size:clamp(34px,3.6vw,54px);line-height:1.2;margin:0;color:var(--text)}
 .quote em{color:var(--gold-l)}
 .panel h2{margin-bottom:10px}
-.role{font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:var(--mute);margin:0 0 30px}
+.panel .role{font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:var(--mute);margin:0 0 30px}
 .panel p{color:var(--soft);margin:0 0 18px;font-size:17px}
 .facts{list-style:none;margin:16px 0 0;padding:0;border-top:1px solid var(--line)}
 .facts li{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);font-size:15px}
@@ -208,12 +206,23 @@ footer .big{font-family:var(--serif);font-style:italic;font-weight:500;font-size
  .hero img{object-position:center 30%}
  .hero .shade{background:linear-gradient(180deg,rgba(11,11,12,.85) 0%,rgba(11,11,12,.45) 30%,rgba(11,11,12,.6) 50%,rgba(11,11,12,.92) 74%,#0B0B0C 100%)}
  .hero-body{padding-bottom:120px}.hero-meta{display:none}.scroll{bottom:22px}
- .story{grid-template-columns:1fr}
- .story-photo{grid-column:1;position:relative;height:78vh;height:78svh;max-height:680px}
- .arch{width:min(80%,340px);height:74%;bottom:6%}
- .story-text{grid-column:1;grid-row:2;padding:0 16px}
- .panel{min-height:0;padding:56px 0;max-width:none}
- .facts li{grid-template-columns:1fr;gap:4px}
+ .story{grid-template-columns:44% 56%}
+ .arch{width:88%;height:60%;bottom:16%}
+ .arch::before{inset:7px 7px 0}
+ .portrait{left:0;right:0;bottom:10%;height:68%;width:auto;max-width:none;aspect-ratio:auto;transform:none}
+ .portrait img{object-fit:cover;object-position:50% top}
+ .story-floor{bottom:10%}
+ .story-text{padding:0 16px 0 10px}
+ .panel{padding:72px 0}
+ .panel .eyebrow{font-size:11px;letter-spacing:.2em;margin-bottom:14px}
+ .panel .quote{font-size:23px}
+ .panel h2{font-size:32px}
+ .panel .role{font-size:11px;letter-spacing:.14em;margin-bottom:18px}
+ .panel p{font-size:14.5px;line-height:1.6}
+ .sign{font-size:24px}
+ .facts li{grid-template-columns:1fr;gap:2px;padding:12px 0;font-size:13.5px}
+ .facts b{font-size:10.5px}
+ .panel .btn{padding:0 18px;font-size:11px;letter-spacing:.12em}
  .hero-body p,.hero-body .eyebrow{text-shadow:0 1px 3px rgba(0,0,0,.9)}
  .trust{grid-template-columns:1fr 1fr}.trust div{border-bottom:1px solid var(--line)}
  .grid{grid-template-columns:1fr 1fr;gap:26px 14px}.grid figure:nth-child(4n+2),.grid figure:nth-child(4n+4){transform:none}.grid figure:nth-child(even){transform:translateY(30px)}
