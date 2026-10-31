@@ -39,16 +39,29 @@ const risers = document.querySelectorAll(
 );
 const golds = document.querySelectorAll('.gold:not(.ink-text)');
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    for (const e of entries) {
-      if (!e.isIntersecting) continue;
-      e.target.classList.add('seen');
-      if (e.target.classList.contains('gold')) e.target.classList.add('lit');
-      observer.unobserve(e.target);
-    }
-  },
-  { rootMargin: '0px 0px -12% 0px' },
-);
-risers.forEach((el) => observer.observe(el));
-golds.forEach((el) => observer.observe(el));
+// Checked on scroll (not IntersectionObserver) so text can never stay hidden after a big jump.
+let pending = [...new Set([...risers, ...golds])];
+let checking = false;
+
+const reveal = () => {
+  checking = false;
+  const line = innerHeight * 0.88;
+  pending = pending.filter((el) => {
+    if (el.getBoundingClientRect().top > line) return true;
+    el.classList.add('seen');
+    if (el.classList.contains('gold')) el.classList.add('lit');
+    return false;
+  });
+  if (!pending.length) removeEventListener('scroll', queueReveal);
+};
+
+function queueReveal() {
+  if (!checking) {
+    checking = true;
+    requestAnimationFrame(reveal);
+  }
+}
+
+addEventListener('scroll', queueReveal, { passive: true });
+addEventListener('resize', queueReveal);
+reveal();

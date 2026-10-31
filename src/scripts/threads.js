@@ -8,6 +8,7 @@ const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 if (root && desktop && !calm) {
   const svg = root.querySelector('svg');
+  const hero = document.querySelector('.hero');
   const view = svg.viewBox.baseVal;
   const SAMPLES = 700;
 
@@ -150,7 +151,10 @@ if (root && desktop && !calm) {
     // last screen of scrolling so the threads can finish in the footer.
     const left = document.documentElement.scrollHeight - innerHeight - scrollY;
     const line = 0.62 + 0.38 * Math.min(1, Math.max(0, 1 - left / innerHeight));
-    const target = ((innerHeight * line - rect.top) / rect.height) * view.height;
+    // Never less than a stretch below the hero, so the space under it is not empty on load.
+    const heroBottom = hero ? hero.getBoundingClientRect().bottom : 0;
+    const floor = heroBottom + Math.max(140, (innerHeight - heroBottom) * 0.75);
+    const target = ((Math.max(innerHeight * line, floor) - rect.top) / rect.height) * view.height;
     const moved = Math.abs(scrollY - lastScroll);
     lastScroll = scrollY;
     for (const t of threads) {

@@ -32,6 +32,9 @@ const formMessages = {
 {/* Follow the visitor's saved choice, otherwise the browser language (Spanish only for es-*). */}
 <script is:inline define:vars={{ lang }}>
 document.documentElement.classList.add('js');
+// A reload starts at the top so the intro animations play again (links with #section still jump).
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+if (!location.hash) scrollTo(0, 0);
 try {
   var saved = localStorage.getItem('kc-lang');
   var browser = ((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase();
