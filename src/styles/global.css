@@ -15,8 +15,13 @@ a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
 .eyebrow{font-size:14px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-l);font-weight:500}
 h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;line-height:1.02}
 h2{font-size:clamp(40px,5.2vw,68px)}
-/* A dark halo around body text so the gold threads read as passing behind it */
-:is(.story,.trust,.obra,.esp,.proc,.contact,.faq,footer) :is(p,h2,h3,li,summary,figcaption,small,span,b,label):not(.gold):not(.btn){text-shadow:0 0 6px rgba(11,11,12,.95),0 0 14px rgba(11,11,12,.9),0 0 28px rgba(11,11,12,.75)}
+/* A feathered patch of page color behind each text block, so the gold threads fade out behind words.
+   Gold titles carry a glow filter, so their patch goes on the parent instead. */
+:is(.story,.obra,.esp,.proc,.contact,.faq,footer) :is(p,h2:not(.gold),h3,summary,figcaption,.eyebrow,.facts li,.chan li,.sign),
+:is(.story,.obra,.esp,.proc,.contact,.faq,footer) :has(> .gold:is(h2,.big)),.trust>div{position:relative;isolation:isolate}
+:is(.story,.obra,.esp,.proc,.contact,.faq,footer) :is(p,h2:not(.gold),h3,summary,figcaption,.eyebrow,.facts li,.chan li,.sign)::before,
+:is(.story,.obra,.esp,.proc,.contact,.faq,footer) :has(> .gold:is(h2,.big))::before,.trust>div::before{content:"";position:absolute;inset:-12px -18px;z-index:-1;border-radius:24px;background:rgba(11,11,12,.86);filter:blur(12px);pointer-events:none}
+:is(.esp,.contact,footer) :is(p,h2,h3,summary,figcaption,.eyebrow,.chan li,div,li)::before{background:rgba(16,15,13,.9)}
 .rule{display:flex;align-items:center;gap:14px;color:var(--gold)}
 .rule i{display:block;width:48px;height:1px;background:var(--gold)}
 .btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 34px;font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--gold);border-radius:999px;transition:.35s;cursor:pointer;font-family:var(--sans)}
