@@ -21,6 +21,28 @@ const description = 'Estudio privado de tatuaje de Karla Chirinos. Fine line, mi
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
+<div class="threads" aria-hidden="true">
+ <svg viewBox="0 0 1440 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+   <linearGradient id="thread-gold" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1440" y2="0">
+    <stop offset="0" stop-color="#9C7A3E" stop-opacity="0"/>
+    <stop offset=".3" stop-color="#E8CF9A"/>
+    <stop offset=".65" stop-color="#C9A46A"/>
+    <stop offset="1" stop-color="#F6E3B4" stop-opacity="0"/>
+   </linearGradient>
+   <path id="t1" d="M-50 820 C250 600 380 980 700 760 S1150 420 1500 520"/>
+   <path id="t2" d="M-50 200 C300 330 500 40 820 240 S1200 520 1500 300"/>
+   <path id="t3" d="M300 -50 C200 250 640 380 560 640 S900 960 1000 1050"/>
+   <path id="t4" d="M1100 -50 C1300 200 900 420 1080 700 S1300 900 1490 800"/>
+  </defs>
+  <g class="base" fill="none" stroke="url(#thread-gold)" stroke-width="1" stroke-linecap="round">
+   <use href="#t1"/><use href="#t2"/><use href="#t3"/><use href="#t4"/>
+  </g>
+  <g class="flow" fill="none" stroke="url(#thread-gold)" stroke-width="2" stroke-linecap="round">
+   <use href="#t1" class="f1" pathLength="100"/><use href="#t2" class="f2" pathLength="100"/><use href="#t3" class="f3" pathLength="100"/><use href="#t4" class="f4" pathLength="100"/>
+  </g>
+ </svg>
+</div>
 <section class="hero" id="inicio">
  <picture>
   <source media="(max-width:900px)" srcset="/img/hero/hero-movil.webp">
