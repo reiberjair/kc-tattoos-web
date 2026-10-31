@@ -5,17 +5,17 @@
 const W = 1440;
 const H = 7000;
 const Y0 = 900;
-const Y1 = 5300;
-const N = 800;
+const Y1 = 8000;
+const N = 1100;
 
-// Where each thread comes to rest: both edges after "Specialties", and below "Process".
+// Where each thread comes to rest, in the footer: both edges and beside the links.
 const ends = [
-  { x: 90, y: 4600, turn: 1 },
-  { x: 1266, y: 4640, turn: -1 },
-  { x: 477, y: 5200, turn: 1 },
+  { x: 90, y: 6720, turn: 1 },
+  { x: 1350, y: 6700, turn: -1 },
+  { x: 1000, y: 6900, turn: 1 },
 ];
 
-const center = (s) => [W / 2 + 380 * Math.sin(Math.PI * 2 * 1.6 * s + 0.6), Y0 + (Y1 - Y0) * s];
+const center = (s) => [W / 2 + 380 * Math.sin(Math.PI * 2 * 2.1 * s + 0.6), Y0 + (Y1 - Y0) * s];
 const smooth = (a, b, v) => {
   const k = Math.min(1, Math.max(0, (v - a) / (b - a)));
   return k * k * (3 - 2 * k);
@@ -27,7 +27,7 @@ function braid(s, i) {
   const [xb, yb] = center(Math.min(1, s + 0.001));
   const len = Math.hypot(xb - xa, yb - ya) || 1;
   const spread = 34 + 330 * Math.pow(1 - s, 1.6);
-  const twist = Math.PI * 2 * (2.5 * s + 5.5 * s * s) + (i * Math.PI * 2) / 3;
+  const twist = Math.PI * 2 * (3.2 * s + 7 * s * s) + (i * Math.PI * 2) / 3;
   const off = spread * Math.sin(twist);
   return [x - ((yb - ya) / len) * off, y + ((xb - xa) / len) * off];
 }
@@ -73,8 +73,9 @@ const lines = [0, 1, 2].map((i) => ({ d: thread(i), width: [1.3, 1.05, 0.85][i] 
    {lines.map((l) => <path d={l.d} stroke-width={l.width * 0.7} />)}
   </g>
   {/* Live version: two halo layers make the drawn line look softly incandescent. */}
-  <g class="halo halo-wide">{lines.map((l, i) => <path class="ink-part" data-i={i} d={l.d} stroke-width="12" />)}</g>
-  <g class="halo halo-near">{lines.map((l, i) => <path class="ink-part" data-i={i} d={l.d} stroke-width="3.6" />)}</g>
+  <g class="halo halo-wide">{lines.map((l, i) => <path class="ink-part" data-i={i} d={l.d} stroke-width="18" />)}</g>
+  <g class="halo halo-mid">{lines.map((l, i) => <path class="ink-part" data-i={i} d={l.d} stroke-width="7" />)}</g>
+  <g class="halo halo-near">{lines.map((l, i) => <path class="ink-part" data-i={i} d={l.d} stroke-width="3" />)}</g>
   <g class="ink">{lines.map((l, i) => <path class="draw ink-part" data-i={i} d={l.d} stroke-width={l.width} />)}</g>
  </svg>
  <canvas class="sparks"></canvas>

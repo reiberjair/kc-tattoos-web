@@ -1,16 +1,54 @@
-// Plays the portrait entrance once the Karla section comes into view.
+// 1. Karla's entrance follows the scroll: the backlight swells first, then she fades up in front of it.
+// 2. Section text rises in once, and gold titles light up with a glint when they appear.
+const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const story = document.querySelector('.story');
 
 if (story) {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      if (entries.some((e) => e.isIntersecting)) {
-        story.classList.add('in');
-        observer.disconnect();
-      }
-    },
-    // The section is several screens tall, so trigger on its top edge reaching 70% of the screen.
-    { rootMargin: '0px 0px -30% 0px' },
-  );
-  observer.observe(story);
+  const arch = story.querySelector('.arch');
+  const floor = story.querySelector('.story-floor');
+  const img = story.querySelector('.portrait img');
+  const clamp = (v) => Math.min(1, Math.max(0, v));
+  const ease = (v) => 1 - Math.pow(1 - v, 3);
+  let queued = false;
+
+  const update = () => {
+    queued = false;
+    // Starts with the first scroll, finishes after about 420px.
+    const p = calm ? 1 : clamp(scrollY / 420);
+    const a = ease(clamp(p / 0.55));
+    const k = ease(clamp((p - 0.25) / 0.75));
+    arch.style.opacity = String(a);
+    arch.style.transform = `translateX(-50%) scale(${0.6 + 0.4 * a})`;
+    floor.style.transform = `scaleX(${a})`;
+    img.style.opacity = String(k);
+    img.style.transform = `translateY(${(1 - k) * 110}px) scale(${0.92 + 0.08 * k})`;
+    if (p > 0.45) story.classList.add('in');
+  };
+
+  addEventListener('scroll', () => {
+    if (!queued) {
+      queued = true;
+      requestAnimationFrame(update);
+    }
+  }, { passive: true });
+  update();
 }
+
+const risers = document.querySelectorAll(
+  '.js :is(.story,.obra,.esp,.proc,.contact,.faq) :is(h2,.eyebrow,.quote,.role,.sign,.panel>p,.facts li,.frame2,.steps>div,.esp li,figcaption,details,.lead,.chan li,form), .js .trust>div',
+);
+const golds = document.querySelectorAll('.gold:not(.ink-text)');
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      e.target.classList.add('seen');
+      if (e.target.classList.contains('gold')) e.target.classList.add('lit');
+      observer.unobserve(e.target);
+    }
+  },
+  { rootMargin: '0px 0px -12% 0px' },
+);
+risers.forEach((el) => observer.observe(el));
+golds.forEach((el) => observer.observe(el));

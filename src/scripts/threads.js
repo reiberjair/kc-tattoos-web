@@ -146,8 +146,11 @@ if (root && desktop && !calm) {
   const update = () => {
     queued = false;
     rect = svg.getBoundingClientRect();
-    // The tips ride a bit below the middle of the screen.
-    const target = ((innerHeight * 0.62 - rect.top) / rect.height) * view.height;
+    // The tips ride a bit below the middle of the screen, sliding to the bottom edge over the
+    // last screen of scrolling so the threads can finish in the footer.
+    const left = document.documentElement.scrollHeight - innerHeight - scrollY;
+    const line = 0.62 + 0.38 * Math.min(1, Math.max(0, 1 - left / innerHeight));
+    const target = ((innerHeight * line - rect.top) / rect.height) * view.height;
     const moved = Math.abs(scrollY - lastScroll);
     lastScroll = scrollY;
     for (const t of threads) {
