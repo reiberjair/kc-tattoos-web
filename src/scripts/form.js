@@ -11,6 +11,8 @@ const send = document.getElementById('send');
 const status = document.getElementById('status');
 
 const defaults = { title: title.textContent, hint: hint.textContent, note: status.textContent };
+// Translated messages come from data attributes on the form (see i18n.js).
+const msg = form.dataset;
 let photos = [];
 
 // Phone photos are often 5 MB+; Netlify accepts ~8 MB per submission, so shrink them first.
@@ -42,14 +44,14 @@ input.addEventListener('change', () => {
     hint.textContent = defaults.hint;
     return;
   }
-  title.textContent = photos.length === 1 ? '1 foto añadida' : `${photos.length} fotos añadidas`;
+  title.textContent = photos.length === 1 ? msg.one : msg.many.replace('{n}', photos.length);
   hint.textContent = photos.map((f) => f.name).join(' · ');
 });
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
   send.disabled = true;
-  status.textContent = 'Enviando…';
+  status.textContent = msg.sending;
 
   const data = new FormData(form);
   data.delete('photos');
@@ -61,11 +63,15 @@ form.addEventListener('submit', async (event) => {
   try {
     const res = await fetch(ENDPOINT, { method: 'POST', body: data });
     if (!res.ok) throw new Error(String(res.status));
-    form.innerHTML =
-      '<h3>Mensaje enviado</h3>' +
-      '<p class="sub" style="margin-top:14px;font-size:16px;color:var(--soft)">Gracias. Karla recibió tu idea y te responderá personalmente por el medio que dejaste. Si no ves respuesta, revisa tu carpeta de spam.</p>';
+    const done = document.createElement('h3');
+    done.textContent = msg.okTitle;
+    const text = document.createElement('p');
+    text.className = 'sub';
+    text.style.cssText = 'margin-top:14px;font-size:16px;color:var(--soft)';
+    text.textContent = msg.okText;
+    form.replaceChildren(done, text);
   } catch {
     send.disabled = false;
-    status.textContent = 'No se pudo enviar. Revisa tu conexión e inténtalo otra vez, o escríbenos por WhatsApp.';
+    status.textContent = msg.error;
   }
 });

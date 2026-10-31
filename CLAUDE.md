@@ -19,8 +19,17 @@ The contact form sends the visitor's details and up to 3 photos to Karla by emai
   `zona`, `tamano`, `idea`, `foto1..3`). Check Netlify's current free-plan form limits before launch.
 - Forms do not work in `astro dev` / `astro preview`; they only work once deployed on Netlify.
 
+## Languages
+- Spanish at `/`, English at `/en/`. Both render `src/components/Page.astro`; all copy lives in `src/i18n.js`.
+- An inline script in the head picks the language: the saved choice (`localStorage['kc-lang']`, set by
+  the ES/EN link) or else the browser language (Spanish only for `es-*`, everything else English).
+- Form field names stay the same in both languages; a hidden `idioma` field tells Karla which one was used.
+
 ## Files
-- `src/pages/index.astro` — the whole page. `src/styles/global.css` — all styles.
+- `src/components/Page.astro` — the whole page. `src/styles/global.css` — all styles.
+- `src/components/Threads.astro` + `src/scripts/threads.js` — braided gold threads drawn on scroll
+  with sparkles at the tips (desktop only; static on phones).
+- `public/img/karla/` — portrait cutout (transparent WebP). The current one is AI-generated for the demo.
 - `public/img/` — optimized WebP images (demo photos generated with AI).
 - `originales/` — full-resolution PNGs, git-ignored, never served.
 - `mockup/template.html` — approved design mockup. `referencia-diseno/` — older prototype, reference only.
