@@ -1,0 +1,47 @@
+---
+// Page-long cursive gold lines. A slow sweep plus a rotating offset makes
+// calligraphic loops wherever the loop speed beats the downward speed.
+const W = 1440;
+const H = 7000;
+
+function thread({ phase, amp, sweeps, curls, radius, x0 = W / 2, y0 = 980, y1 = H - 200, n = 520 }) {
+  const pts = [];
+  for (let i = 0; i <= n; i++) {
+    const s = i / n;
+    const r = radius * (0.55 + 0.45 * Math.sin(s * Math.PI * 2 * 2.3 + phase));
+    const a = s * Math.PI * 2 * curls + phase * 2;
+    const x = x0 + amp * Math.sin(s * Math.PI * 2 * sweeps + phase) + r * Math.sin(a);
+    const y = y0 + (y1 - y0) * s + r * Math.cos(a);
+    pts.push(`${x.toFixed(1)} ${y.toFixed(1)}`);
+  }
+  return `M${pts.join('L')}`;
+}
+
+const lines = [
+  { d: thread({ phase: 0.4, amp: 430, sweeps: 2.6, curls: 11, radius: 120 }), width: 1.2, speed: 1 },
+  { d: thread({ phase: 3.4, amp: 380, sweeps: 2.1, curls: 8, radius: 95 }), width: 0.8, speed: 0.85 },
+];
+---
+<div class="threads" aria-hidden="true">
+ <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none">
+  <defs>
+   <linearGradient id="thread-gold" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#9C7A3E"/>
+    <stop offset=".35" stop-color="#F2DDA8"/>
+    <stop offset=".6" stop-color="#C9A46A"/>
+    <stop offset="1" stop-color="#E8CF9A"/>
+   </linearGradient>
+   <radialGradient id="tip-glow">
+    <stop offset="0" stop-color="#FFF4D6" stop-opacity=".9"/>
+    <stop offset=".35" stop-color="#E8CF9A" stop-opacity=".35"/>
+    <stop offset="1" stop-color="#C9A46A" stop-opacity="0"/>
+   </radialGradient>
+  </defs>
+  <g class="base">
+   {lines.map((l) => <path d={l.d} stroke-width={l.width * 0.7} />)}
+  </g>
+  {lines.map((l) => <path class="draw" d={l.d} stroke-width={l.width} pathLength="1" data-speed={l.speed} />)}
+  <circle class="tip" r="22" fill="url(#tip-glow)" />
+  <circle class="tip tip-core" r="2.6" fill="#FFF4D6" />
+ </svg>
+</div>

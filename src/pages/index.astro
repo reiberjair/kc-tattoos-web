@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Threads from '../components/Threads.astro';
 const title = 'KC Tattoos · Karla Chirinos | Tatuajes fine line y micro-realismo';
 const description = 'Estudio privado de tatuaje de Karla Chirinos. Fine line, micro-realismo y botánica. Cuéntame tu idea y te respondo con una propuesta.';
 ---
@@ -21,28 +22,7 @@ const description = 'Estudio privado de tatuaje de Karla Chirinos. Fine line, mi
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="threads" aria-hidden="true">
- <svg viewBox="0 0 1440 1000" preserveAspectRatio="xMidYMid slice">
-  <defs>
-   <linearGradient id="thread-gold" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1440" y2="0">
-    <stop offset="0" stop-color="#9C7A3E" stop-opacity="0"/>
-    <stop offset=".3" stop-color="#E8CF9A"/>
-    <stop offset=".65" stop-color="#C9A46A"/>
-    <stop offset="1" stop-color="#F6E3B4" stop-opacity="0"/>
-   </linearGradient>
-   <path id="t1" d="M-50 820 C250 600 380 980 700 760 S1150 420 1500 520"/>
-   <path id="t2" d="M-50 200 C300 330 500 40 820 240 S1200 520 1500 300"/>
-   <path id="t3" d="M300 -50 C200 250 640 380 560 640 S900 960 1000 1050"/>
-   <path id="t4" d="M1100 -50 C1300 200 900 420 1080 700 S1300 900 1490 800"/>
-  </defs>
-  <g class="base" fill="none" stroke="url(#thread-gold)" stroke-width="1" stroke-linecap="round">
-   <use href="#t1"/><use href="#t2"/><use href="#t3"/><use href="#t4"/>
-  </g>
-  <g class="flow" fill="none" stroke="url(#thread-gold)" stroke-width="2" stroke-linecap="round">
-   <use href="#t1" class="f1" pathLength="100"/><use href="#t2" class="f2" pathLength="100"/><use href="#t3" class="f3" pathLength="100"/><use href="#t4" class="f4" pathLength="100"/>
-  </g>
- </svg>
-</div>
+<Threads />
 <section class="hero" id="inicio">
  <picture>
   <source media="(max-width:900px)" srcset="/img/hero/hero-movil.webp">
@@ -52,23 +32,57 @@ const description = 'Estudio privado de tatuaje de Karla Chirinos. Fine line, mi
  <header class="top">
   <a href="#inicio" class="logo">
    <svg width="38" height="38" viewBox="0 0 32 32" fill="none" stroke="#C9A46A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(-45 16 16)"><path d="M1 16h4 M5 16l4-2.6v5.2z M9 13h8v6H9z M18.5 12.6v6.8 M19.5 12.4h9v7.2h-9z M28.5 16c2 0 2.5-2 2.5-3.5"/></g><circle cx="4.2" cy="28" r="1.4" fill="#E8CF9A" stroke="none"/></svg>
-   <span class="gold">KC Tattoos</span>
+   <span class="ink-write" style="--d:.3s;--t:1.6s"><span class="ink-text gold">KC Tattoos</span><i class="ink-tip"></i></span>
   </a>
   <nav class="links"><a href="#obra">Obra</a><a href="#proceso">Proceso</a><a href="#karla">Karla</a><a href="#preguntas">Preguntas</a><a class="btn line" href="#contacto">Contacto</a></nav>
  </header>
  <div class="hero-body"><div>
   <span class="eyebrow">Fine line · Micro-realismo · Botánica</span>
-  <h1>Líneas finas<br><em class="gold">para historias</em><br>que duran.</h1>
+  <h1>
+   <span class="ln"><span class="ink-write" style="--d:.8s;--t:1.1s"><span class="ink-text">Líneas finas</span><i class="ink-tip"></i></span></span>
+   <span class="ln"><span class="ink-write" style="--d:1.8s;--t:1.3s"><em class="ink-text gold">para historias</em><i class="ink-tip"></i></span></span>
+   <span class="ln"><span class="ink-write" style="--d:2.9s;--t:.9s"><span class="ink-text">que duran.</span><i class="ink-tip"></i></span></span>
+  </h1>
   <p>Estudio privado de Karla Chirinos. Una sola persona por día, con atención completa a tu pieza.</p>
   <div class="cta"><a class="btn solid" href="#contacto">Cuéntame tu idea</a><a class="btn line" href="#obra" style="border-color:transparent;padding:0">Ver la obra →</a></div>
  </div></div>
- <div class="hero-meta"><span>[CIUDAD] · Con cita previa</span><span>Desliza ↓</span></div>
+ <div class="hero-meta"><span>[CIUDAD] · Con cita previa</span></div>
+ <a class="scroll" href="#karla" aria-label="Bajar para conocer a Karla"><span class="mouse"><i></i></span>Descubre</a>
 </section>
 
-<section class="intro">
- <div class="wrap">
-  <div class="rule" style="justify-content:center"><i></i><span class="eyebrow">El estudio</span><i></i></div>
-  <p>Cada pieza se dibuja desde cero, a mano, <em>pensada para tu cuerpo</em> y para que se vea bien dentro de veinte años.</p>
+<section class="story" id="karla">
+ <div class="story-photo">
+  <div class="portrait">
+   <div class="portrait-empty"><svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="#C9A46A" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Retrato de Karla<br>próximamente</div>
+   <img loading="lazy" src="/img/karla/karla.webp" alt="Retrato de Karla Chirinos, tatuadora y fundadora de KC Tattoos" onerror="this.remove()">
+  </div>
+ </div>
+ <div class="story-text">
+  <article class="panel">
+   <span class="eyebrow">Hola, soy Karla</span>
+   <p class="quote">“Cada pieza se dibuja desde cero, a mano, <em>pensada para tu cuerpo</em> y para que se vea bien dentro de veinte años.”</p>
+   <span class="sign">Karla Chirinos<small>Tatuadora · Fundadora de KC Tattoos</small></span>
+  </article>
+  <article class="panel">
+   <span class="eyebrow">La artista</span>
+   <h2 class="gold">Karla Chirinos</h2>
+   <p class="role">Tatuadora profesional · Fine line y micro-realismo</p>
+   <p>[Presentación personal de Karla: cómo empezó a tatuar, qué la inspira y qué busca en cada pieza. Dos o tres frases en primera persona.]</p>
+   <p>[Formación, estudios de arte o ilustración, cursos y lugares donde ha trabajado.]</p>
+   <ul class="facts">
+    <li><b>Experiencia</b><span>[X] años tatuando</span></li>
+    <li><b>Especialidad</b><span>Fine line, micro-realismo y botánica</span></li>
+    <li><b>Formación</b><span>[Escuela, cursos o certificaciones]</span></li>
+    <li><b>Licencia</b><span>Licencia sanitaria [Nº]</span></li>
+   </ul>
+  </article>
+  <article class="panel">
+   <span class="eyebrow">Cómo trabajo</span>
+   <h2>Máquina tipo pen, <em class="gold" style="font-weight:500">stencil a mano</em> y tinta nueva en cada sesión.</h2>
+   <div class="frame2"><div class="ph"><img loading="lazy" src="/img/hero/estudio-manos-1000.webp" alt="Manos con guantes negros tatuando con una máquina tipo pen"></div></div>
+   <p>Cada pieza empieza como un dibujo en papel que se transfiere a tu piel. Así ves la posición exacta antes del primer trazo y ajustamos lo que haga falta.</p>
+   <div><a class="btn solid" href="#contacto">Cuéntame tu idea</a></div>
+  </article>
  </div>
 </section>
 <div class="wrap">
@@ -120,18 +134,6 @@ const description = 'Estudio privado de tatuaje de Karla Chirinos. Fine line, mi
  </div>
 </section>
 
-<section class="karla" id="karla">
- <div class="wrap">
-  <div class="frame2"><div class="ph"><img loading="lazy" src="/img/hero/estudio-manos-1000.webp" alt="Manos con guantes negros tatuando con una máquina tipo pen"></div></div>
-  <div>
-   <span class="eyebrow">La artista</span>
-   <h2>Máquina tipo pen, <em class="gold" style="font-weight:500">stencil a mano</em> y tinta nueva en cada sesión.</h2>
-   <p>Cada pieza empieza como un dibujo en papel que se transfiere a tu piel. Así ves la posición exacta antes del primer trazo y ajustamos lo que haga falta.</p>
-   <p>[Texto breve sobre la trayectoria de Karla: años de experiencia, estilo, formación.]</p>
-   <span class="sign">Karla Chirinos<small>Fundadora · KC Tattoos</small></span>
-  </div>
- </div>
-</section>
 
 <section class="contact" id="contacto">
  <div class="wrap">
@@ -186,5 +188,6 @@ const description = 'Estudio privado de tatuaje de Karla Chirinos. Fine line, mi
  </div>
 </footer>
 <script src="../scripts/form.js"></script>
+<script src="../scripts/threads.js"></script>
 </body>
 </html>
