@@ -7,6 +7,9 @@ if (story) {
   const arch = story.querySelector('.arch');
   const floor = story.querySelector('.story-floor');
   const img = story.querySelector('.portrait img');
+  const photo = story.querySelector('.story-photo');
+  const firstPanel = story.querySelector('.panel');
+  const phone = matchMedia('(max-width: 900px)');
   const clamp = (v) => Math.min(1, Math.max(0, v));
   const ease = (v) => 1 - Math.pow(1 - v, 3);
   let queued = false;
@@ -23,6 +26,15 @@ if (story) {
     img.style.opacity = String(k);
     img.style.transform = `translateY(${(1 - k) * 110}px) scale(${0.92 + 0.08 * k})`;
     if (p > 0.45) story.classList.add('in');
+    // Phones: Karla stays fixed only while her quote passes under her, then scrolls away
+    // so the rest of the text gets the whole screen.
+    if (phone.matches) {
+      const hold = firstPanel.offsetHeight * 0.9;
+      const out = Math.max(0, Math.min(photo.offsetHeight, scrollY - story.offsetTop - hold));
+      photo.style.transform = out ? `translateY(${-out}px)` : '';
+    } else {
+      photo.style.transform = '';
+    }
   };
 
   addEventListener('scroll', () => {
