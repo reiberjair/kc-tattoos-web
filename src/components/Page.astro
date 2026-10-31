@@ -31,6 +31,7 @@ const formMessages = {
 <meta property="og:image" content="/img/hero/hero-1920.webp">
 {/* Follow the visitor's saved choice, otherwise the browser language (Spanish only for es-*). */}
 <script is:inline define:vars={{ lang }}>
+document.documentElement.classList.add('js');
 try {
   var saved = localStorage.getItem('kc-lang');
   var browser = ((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase();
@@ -194,5 +195,6 @@ try {
 <script src="../scripts/form.js"></script>
 <script src="../scripts/threads.js"></script>
 <script src="../scripts/lang.js"></script>
+<script src="../scripts/reveal.js"></script>
 </body>
 </html>

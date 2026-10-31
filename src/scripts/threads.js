@@ -10,7 +10,6 @@ if (root && desktop && !calm) {
   const svg = root.querySelector('svg');
   const view = svg.viewBox.baseVal;
   const SAMPLES = 700;
-  const halos = root.querySelectorAll('.halo path');
 
   // Per thread: real length plus a lookup of length -> highest y reached so far.
   const threads = [...root.querySelectorAll('.draw')].map((path, i) => {
@@ -21,12 +20,13 @@ if (root && desktop && !calm) {
       maxY = Math.max(maxY, path.getPointAtLength((k / SAMPLES) * length).y);
       ys[k] = maxY;
     }
-    // Dashes in real user units, so the visible end matches getPointAtLength.
-    for (const p of [path, halos[i]]) {
+    // The core line and its glow layers; dashes in real user units so the visible end matches getPointAtLength.
+    const parts = [...root.querySelectorAll(`.ink-part[data-i="${i}"]`)];
+    for (const p of parts) {
       p.style.strokeDasharray = `${length} ${length}`;
       p.style.strokeDashoffset = String(length);
     }
-    return { path, halo: halos[i], length, ys, drawn: 0, x: 0, y: 0, phase: i * 2.1 };
+    return { path, parts, length, ys, drawn: 0, x: 0, y: 0, phase: i * 2.1 };
   });
 
   const canvas = root.querySelector('.sparks');
@@ -163,8 +163,7 @@ if (root && desktop && !calm) {
       if (drawn !== t.drawn) {
         t.drawn = drawn;
         const offset = String(t.length * (1 - drawn));
-        t.path.style.strokeDashoffset = offset;
-        t.halo.style.strokeDashoffset = offset;
+        for (const p of t.parts) p.style.strokeDashoffset = offset;
         const p = t.path.getPointAtLength(drawn * t.length);
         t.x = p.x;
         t.y = p.y;

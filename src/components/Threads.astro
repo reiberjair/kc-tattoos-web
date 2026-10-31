@@ -67,9 +67,15 @@ const lines = [0, 1, 2].map((i) => ({ d: thread(i), width: [1.3, 1.05, 0.85][i] 
     <stop offset="1" stop-color="#9C7A3E"/>
    </linearGradient>
   </defs>
-  <g class="base">{lines.map((l) => <path d={l.d} stroke-width={l.width * 0.7} />)}</g>
-  <g class="halo">{lines.map((l) => <path d={l.d} stroke-width="6" />)}</g>
-  <g class="ink">{lines.map((l) => <path class="draw" d={l.d} stroke-width={l.width} />)}</g>
+  {/* Static version for phones: a soft glow under a thin core. */}
+  <g class="base">
+   {lines.map((l) => <path class="glow" d={l.d} stroke-width="5" />)}
+   {lines.map((l) => <path d={l.d} stroke-width={l.width * 0.7} />)}
+  </g>
+  {/* Live version: two halo layers make the drawn line look softly incandescent. */}
+  <g class="halo halo-wide">{lines.map((l, i) => <path class="ink-part" data-i={i} d={l.d} stroke-width="12" />)}</g>
+  <g class="halo halo-near">{lines.map((l, i) => <path class="ink-part" data-i={i} d={l.d} stroke-width="3.6" />)}</g>
+  <g class="ink">{lines.map((l, i) => <path class="draw ink-part" data-i={i} d={l.d} stroke-width={l.width} />)}</g>
  </svg>
  <canvas class="sparks"></canvas>
 </div>
