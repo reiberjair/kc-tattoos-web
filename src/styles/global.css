@@ -3,11 +3,12 @@
 body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
 .wrap{max-width:1240px;margin:0 auto;padding:0 28px}
-.gold{background:linear-gradient(100deg,#A9843F 0%,#E8CF9A 18%,#C9A46A 36%,#FFF1CC 50%,#C9A46A 64%,#E8CF9A 82%,#A9843F 100%);background-size:200% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 16px rgba(232,207,154,.18))}
-/* Gold text lights up with a glint when it appears (reveal.js adds .lit); desktop keeps a slow shimmer */
-.gold.lit{animation:gold-glint 2.4s cubic-bezier(.3,.6,.3,1) both}
-@media (min-width:900px) and (hover:hover){.gold.lit{animation:gold-glint 2.4s cubic-bezier(.3,.6,.3,1) both,gold-idle 9s linear 2.4s infinite}}
-@keyframes gold-glint{0%{background-position:100% 0;filter:drop-shadow(0 0 0 rgba(232,207,154,0))}45%{filter:drop-shadow(0 0 22px rgba(246,227,180,.45))}100%{background-position:-100% 0;filter:drop-shadow(0 0 16px rgba(232,207,154,.18))}}
+.gold{background:linear-gradient(100deg,#A9843F 0%,#E8CF9A 18%,#C9A46A 36%,#FFF1CC 50%,#C9A46A 64%,#E8CF9A 82%,#A9843F 100%);background-size:200% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 14px rgba(242,221,168,.32))}
+/* Gold text lights up with a glint when it appears (reveal.js adds .lit), then keeps a slow shimmer */
+.gold.lit{animation:gold-glint 2.4s cubic-bezier(.3,.6,.3,1) both,gold-idle 8s linear 2.4s infinite}
+@keyframes gold-glint{0%{background-position:100% 0;filter:drop-shadow(0 0 0 rgba(232,207,154,0))}45%{filter:drop-shadow(0 0 26px rgba(246,227,180,.6))}100%{background-position:-100% 0;filter:drop-shadow(0 0 14px rgba(242,221,168,.32))}}
+/* Large light text glows softly, as if lit */
+.hero-body h1 .ink-text:not(.gold),.panel .quote,.steps h3,.esp li h3,summary,figcaption b{text-shadow:0 0 18px rgba(242,221,168,.28),0 0 2px rgba(255,241,204,.25)}
 @keyframes gold-idle{from{background-position:100% 0}to{background-position:-100% 0}}
 /* Section text rises in once (reveal.js adds .seen) */
 .js :is(.story,.obra,.esp,.proc,.contact,.faq) :is(h2,.eyebrow,.quote,.role,.sign,.panel>p,.facts li,.frame2,.steps>div,.esp li,figcaption,details,.lead,.chan li,form),.js .trust>div{opacity:0;transform:translateY(22px);transition:opacity .9s ease,transform 1.1s cubic-bezier(.2,.7,.2,1)}
@@ -31,20 +32,22 @@ h2{font-size:clamp(40px,5.2vw,68px)}
 .btn.solid:hover::after{transform:translateX(360%) skewX(-20deg)}
 .btn.line{color:var(--gold-l)}.btn.line:hover{background:var(--gold);color:#0B0B0C}
 body{position:relative}
+html,body{overflow-x:clip}
 section,footer,.wrap{position:relative;z-index:1}
 
-/* GOLD THREADS: page-long cursive lines; on desktop they are "tattooed" as you scroll (threads.js) */
+/* GOLD THREADS: page-long cursive lines "tattooed" as you scroll (threads.js); stroke widths are in screen px */
 .threads{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .threads svg{position:absolute;inset:0;width:100%;height:100%}
-.threads path{fill:none;stroke-linecap:round;stroke-linejoin:round}
-.threads .base path{stroke:#D9BC82;opacity:.32;vector-effect:non-scaling-stroke}
+.threads path{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.threads .base path{stroke:#D9BC82;opacity:.32}
+@media (max-width:899px),(hover:none){.threads .halo-wide{visibility:hidden}.threads .halo-mid path{stroke-width:5px}.threads .halo-near path{stroke-width:2.5px}}
 .threads .base .glow{stroke:#E8CF9A;opacity:.06}
 .threads .halo,.threads .ink,.threads .sparks{display:none}
 .threads .halo-wide path{stroke:#E8CF9A;opacity:.05}
 .threads .halo-mid path{stroke:#F2DDA8;opacity:.12}
 .threads .halo-near path{stroke:#FFF1CC;opacity:.3}
 .threads .draw{stroke:url(#thread-gold);opacity:1}
-.threads .sparks{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none}
+.threads .sparks{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
 .threads.live .base{display:none}
 .threads.live .halo,.threads.live .ink,.threads.live .sparks{display:block}
 
@@ -99,8 +102,8 @@ nav.links a.lang::after{display:none}
 .arch{position:absolute;left:50%;top:4%;height:68%;aspect-ratio:1;transform:translateX(-50%);pointer-events:none}
 .arch::before{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(closest-side,rgba(255,238,196,.75),rgba(242,221,168,.55) 35%,rgba(214,180,118,.3) 60%,rgba(201,164,106,.1) 82%,rgba(201,164,106,0));will-change:transform,opacity;animation:backlight 6s ease-in-out infinite alternate}
 .arch-core{position:absolute;left:50%;top:30%;width:46%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(255,246,222,.6),rgba(246,227,180,.2) 55%,transparent);will-change:transform,opacity;animation:backlight-core 4.5s ease-in-out infinite alternate}
-@keyframes backlight{from{transform:scale(.92);opacity:.75}to{transform:scale(1.05);opacity:1}}
-@keyframes backlight-core{from{transform:translate(-50%,-50%) scale(.85);opacity:.6}to{transform:translate(-50%,-50%) scale(1.12);opacity:1}}
+@keyframes backlight{from{transform:scale(.86);opacity:.6}to{transform:scale(1.08);opacity:1}}
+@keyframes backlight-core{from{transform:translate(-50%,-50%) scale(.75);opacity:.4}to{transform:translate(-50%,-50%) scale(1.2);opacity:1}}
 .portrait{position:absolute;left:50%;bottom:0;height:90%;transform:translateX(-50%);aspect-ratio:2/3;max-width:96%}
 .portrait img{width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 0 22px rgba(232,207,154,.18)) drop-shadow(0 20px 50px rgba(0,0,0,.5));-webkit-mask-image:linear-gradient(0deg,transparent 0%,#000 20%);mask-image:linear-gradient(0deg,transparent 0%,#000 20%)}
 .story-floor{position:absolute;left:10%;right:10%;bottom:6%;height:1px;background:linear-gradient(90deg,transparent,rgba(232,207,154,.6),transparent)}
@@ -234,22 +237,20 @@ footer .big{font-family:var(--serif);font-style:italic;font-weight:500;font-size
  .hero img{object-position:center 30%}
  .hero .shade{background:linear-gradient(180deg,rgba(11,11,12,.85) 0%,rgba(11,11,12,.45) 30%,rgba(11,11,12,.6) 50%,rgba(11,11,12,.92) 74%,#0B0B0C 100%)}
  .hero-body{padding-bottom:120px}.hero-meta{display:none}.scroll{bottom:22px}
- .story{grid-template-columns:44% 56%}
- .arch{top:calc(50% - 46vw);height:auto;width:150%}
- /* Whole figure, never cropped: the 2:3 portrait fills the column width, centered vertically */
- .portrait{left:0;right:0;top:calc(50% - 33vw);bottom:auto;width:100%;height:auto;max-width:none;aspect-ratio:2/3;transform:none}
- .story-floor{bottom:auto;top:calc(50% + 31vw)}
- .story-text{padding:0 16px 0 10px}
- .panel{padding:72px 0}
- .panel .eyebrow{font-size:11px;letter-spacing:.2em;margin-bottom:14px}
- .panel .quote{font-size:23px}
- .panel h2{font-size:32px}
- .panel .role{font-size:11px;letter-spacing:.14em;margin-bottom:18px}
- .panel p{font-size:14.5px;line-height:1.6}
- .sign{font-size:24px}
- .facts li{grid-template-columns:1fr;gap:2px;padding:12px 0;font-size:13.5px}
- .facts b{font-size:10.5px}
- .panel .btn{padding:0 18px;font-size:11px;letter-spacing:.12em}
+ /* Same idea as desktop: Karla stays fixed (here at the top, large) and the text changes below,
+    sliding up under her and fading out at her feet */
+ .story{grid-template-columns:1fr}
+ .story-photo{grid-column:1;grid-row:1;height:62vh;height:62svh;z-index:2;background:linear-gradient(180deg,#0B0B0C 0%,#0B0B0C 84%,rgba(11,11,12,0) 100%)}
+ .arch{top:3%;height:min(70%,92vw);width:auto}
+ .portrait{left:50%;top:auto;bottom:4%;height:92%;width:auto;max-width:none;aspect-ratio:2/3;transform:translateX(-50%)}
+ .story-floor{bottom:4%}
+ .story-text{grid-column:1;grid-row:2;padding:0 20px}
+ .panel{min-height:58vh;min-height:58svh;justify-content:flex-start;padding:28px 0 72px}
+ .panel .eyebrow{font-size:12px;letter-spacing:.22em;margin-bottom:14px}
+ .panel .quote{font-size:28px}
+ .panel .role{font-size:12px;letter-spacing:.16em;margin-bottom:20px}
+ .panel p{font-size:16px;line-height:1.65}
+ .facts li{grid-template-columns:1fr;gap:2px;padding:12px 0}
  .hero-body p,.hero-body .eyebrow{text-shadow:0 1px 3px rgba(0,0,0,.9)}
  .trust{grid-template-columns:1fr 1fr}.trust div{border-bottom:1px solid var(--line)}
  .grid{grid-template-columns:1fr 1fr;gap:26px 14px}.grid figure:nth-child(4n+2),.grid figure:nth-child(4n+4){transform:none}.grid figure:nth-child(even){transform:translateY(30px)}

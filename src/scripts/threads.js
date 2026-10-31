@@ -1,33 +1,35 @@
 // Draws the braided gold threads as the page scrolls. The needle tips and their sparkles
 // are painted on a viewport canvas at the exact point where each line ends, so line and
 // tip stay together. When a thread is complete its tip stays lit at the resting point.
-// Desktop only: on phones the threads stay static to avoid lag.
+// Strokes are non-scaling (same width on any screen), so dash lengths are measured in
+// screen pixels from sampled points. Phones get a lighter version (fewer layers and sparks).
 const root = document.querySelector('.threads');
-const desktop = matchMedia('(min-width: 900px) and (hover: hover)').matches;
 const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const lite = !matchMedia('(min-width: 900px) and (hover: hover)').matches;
 
-if (root && desktop && !calm) {
+if (root && !calm) {
   const svg = root.querySelector('svg');
   const hero = document.querySelector('.hero');
   const view = svg.viewBox.baseVal;
   const SAMPLES = 700;
+  const MAX_SPARKS = lite ? 45 : 160;
 
-  // Per thread: real length plus a lookup of length -> highest y reached so far.
+  // Per thread: sampled points (user units) and the highest y reached up to each sample.
   const threads = [...root.querySelectorAll('.draw')].map((path, i) => {
     const length = path.getTotalLength();
+    const xs = new Float32Array(SAMPLES + 1);
     const ys = new Float32Array(SAMPLES + 1);
+    const reach = new Float32Array(SAMPLES + 1);
     let maxY = -Infinity;
     for (let k = 0; k <= SAMPLES; k++) {
-      maxY = Math.max(maxY, path.getPointAtLength((k / SAMPLES) * length).y);
-      ys[k] = maxY;
+      const p = path.getPointAtLength((k / SAMPLES) * length);
+      xs[k] = p.x;
+      ys[k] = p.y;
+      maxY = Math.max(maxY, p.y);
+      reach[k] = maxY;
     }
-    // The core line and its glow layers; dashes in real user units so the visible end matches getPointAtLength.
     const parts = [...root.querySelectorAll(`.ink-part[data-i="${i}"]`)];
-    for (const p of parts) {
-      p.style.strokeDasharray = `${length} ${length}`;
-      p.style.strokeDashoffset = String(length);
-    }
-    return { path, parts, length, ys, drawn: 0, x: 0, y: 0, phase: i * 2.1 };
+    return { parts, xs, ys, reach, cum: new Float32Array(SAMPLES + 1), total: 0, idx: -1, phase: i * 2.1 };
   });
 
   const canvas = root.querySelector('.sparks');
@@ -37,26 +39,44 @@ if (root && desktop && !calm) {
   let rect = svg.getBoundingClientRect();
   let running = false;
 
-  const resize = () => {
-    dpr = Math.min(2, devicePixelRatio || 1);
-    canvas.width = innerWidth * dpr;
+  // Screen-pixel length along each thread, for the current page size.
+  const measure = () => {
+    rect = svg.getBoundingClientRect();
+    const sx = rect.width / view.width;
+    const sy = rect.height / view.height;
+    for (const t of threads) {
+      t.cum[0] = 0;
+      for (let k = 1; k <= SAMPLES; k++) {
+        t.cum[k] = t.cum[k - 1] + Math.hypot((t.xs[k] - t.xs[k - 1]) * sx, (t.ys[k] - t.ys[k - 1]) * sy);
+      }
+      t.total = t.cum[SAMPLES];
+      for (const p of t.parts) {
+        p.style.strokeDasharray = `${t.total} ${t.total}`;
+        p.style.strokeDashoffset = String(t.total - (t.idx > 0 ? t.cum[t.idx] : 0));
+      }
+    }
+  };
+
+  const resizeCanvas = () => {
+    dpr = lite ? 1 : Math.min(2, devicePixelRatio || 1);
+    canvas.width = document.documentElement.clientWidth * dpr;
     canvas.height = innerHeight * dpr;
   };
 
   const screenPoint = (t) => [
-    rect.left + (t.x / view.width) * rect.width,
-    rect.top + (t.y / view.height) * rect.height,
+    rect.left + (t.xs[t.idx] / view.width) * rect.width,
+    rect.top + (t.ys[t.idx] / view.height) * rect.height,
   ];
 
   const visible = (t) => {
-    if (t.drawn <= 0) return false;
+    if (t.idx <= 0) return false;
     const [, y] = screenPoint(t);
     return y > -60 && y < innerHeight + 60;
   };
 
   const emit = (t, count) => {
     const [x, y] = screenPoint(t);
-    for (let n = 0; n < count && sparks.length < 160; n++) {
+    for (let n = 0; n < count && sparks.length < MAX_SPARKS; n++) {
       const a = Math.random() * Math.PI * 2;
       const v = 0.1 + Math.random() * 0.7;
       sparks.push({
@@ -99,7 +119,7 @@ if (root && desktop && !calm) {
       if (!visible(t)) continue;
       anyTip = true;
       drawTip(t, time);
-      if (Math.random() < 0.12) emit(t, 1);
+      if (Math.random() < (lite ? 0.05 : 0.12)) emit(t, 1);
     }
     for (let i = sparks.length - 1; i >= 0; i--) {
       const p = sparks[i];
@@ -162,20 +182,16 @@ if (root && desktop && !calm) {
       let hi = SAMPLES;
       while (lo < hi) {
         const mid = (lo + hi) >> 1;
-        if (t.ys[mid] < target) lo = mid + 1;
+        if (t.reach[mid] < target) lo = mid + 1;
         else hi = mid;
       }
       // Lines stay drawn once revealed, like ink.
-      const drawn = Math.max(t.drawn, lo / SAMPLES);
-      if (drawn !== t.drawn) {
-        t.drawn = drawn;
-        const offset = String(t.length * (1 - drawn));
+      if (lo > t.idx) {
+        t.idx = lo;
+        const offset = String(t.total - t.cum[lo]);
         for (const p of t.parts) p.style.strokeDashoffset = offset;
-        const p = t.path.getPointAtLength(drawn * t.length);
-        t.x = p.x;
-        t.y = p.y;
       }
-      if (moved > 0 && t.drawn < 1 && visible(t)) emit(t, Math.min(4, 1 + Math.round(moved / 40)));
+      if (moved > 0 && t.idx < SAMPLES && visible(t)) emit(t, Math.min(lite ? 2 : 4, 1 + Math.round(moved / 40)));
     }
     start();
   };
@@ -187,12 +203,18 @@ if (root && desktop && !calm) {
     }
   };
 
-  resize();
+  resizeCanvas();
+  measure();
   root.classList.add('live');
   addEventListener('scroll', queue, { passive: true });
   addEventListener('resize', () => {
-    resize();
+    resizeCanvas();
     queue();
   });
+  // Lazy images change the page height, which stretches the threads: re-measure.
+  new ResizeObserver(() => {
+    measure();
+    queue();
+  }).observe(document.body);
   update();
 }
